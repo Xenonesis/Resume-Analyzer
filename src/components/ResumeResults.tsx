@@ -509,14 +509,50 @@ export const ResumeResults: React.FC<ResumeResultsProps> = ({ resume, onBack }) 
           <div className="space-y-6">
             {/* Enhanced Category Scores */}
             <div className="bg-white rounded-2xl shadow-lg border border-gray-200 p-6 mb-6">
-              <h3 className="text-xl font-bold text-gray-900 mb-6">Score Breakdown</h3>
+              <h3 className="text-xl font-bold text-gray-900 mb-6">Detailed Score Breakdown</h3>
+              <p className="text-gray-600 mb-6">Each category is evaluated independently to provide a comprehensive assessment of your resume's strengths and areas for improvement.</p>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
                 {[
-                  { key: 'ATS', label: 'ATS Score', description: 'Applicant Tracking System', icon: '🤖', score: feedback.ATS.score },
-                  { key: 'toneAndStyle', label: 'Tone & Style', description: 'Writing Quality', icon: '✍️', score: feedback.toneAndStyle.score },
-                  { key: 'content', label: 'Content', description: 'Relevance & Quality', icon: '📝', score: feedback.content.score },
-                  { key: 'structure', label: 'Structure', description: 'Organization', icon: '🏗️', score: feedback.structure.score },
-                  { key: 'skills', label: 'Skills', description: 'Job Alignment', icon: '🎯', score: feedback.skills.score }
+                  {
+                    key: 'ATS',
+                    label: 'ATS Compatibility',
+                    description: 'Applicant Tracking System Optimization',
+                    details: 'Resume parsing success rate through automated hiring systems and keyword matching algorithms',
+                    icon: '🤖',
+                    score: feedback.ATS.score
+                  },
+                  {
+                    key: 'toneAndStyle',
+                    label: 'Tone & Style',
+                    description: 'Professional Writing Standards',
+                    details: 'Business communication excellence, grammar accuracy, and consistent professional voice',
+                    icon: '✍️',
+                    score: feedback.toneAndStyle.score
+                  },
+                  {
+                    key: 'content',
+                    label: 'Content Quality',
+                    description: 'Resume Content Optimization',
+                    details: 'Achievement quantification, impact statements, and compelling career narrative development',
+                    icon: '📝',
+                    score: feedback.content.score
+                  },
+                  {
+                    key: 'structure',
+                    label: 'Structure & Format',
+                    description: 'Resume Design & Layout',
+                    details: 'Visual hierarchy, formatting consistency, and ATS-friendly document structure',
+                    icon: '🏗️',
+                    score: feedback.structure.score
+                  },
+                  {
+                    key: 'skills',
+                    label: 'Skills Alignment',
+                    description: 'Job Match Optimization',
+                    details: 'Technical skills matching, competency alignment, and qualification relevance assessment',
+                    icon: '🎯',
+                    score: feedback.skills.score
+                  }
                 ].map((category) => {
                   const grade = getScoreGrade(category.score)
                   return (
@@ -529,6 +565,7 @@ export const ResumeResults: React.FC<ResumeResultsProps> = ({ resume, onBack }) 
                         </div>
                         <h4 className="font-semibold text-gray-900 mt-2">{category.label}</h4>
                         <p className="text-xs text-gray-600">{category.description}</p>
+                        <p className="text-xs text-gray-500 mt-1">{category.details}</p>
                       </div>
                     </div>
                   )
@@ -539,11 +576,46 @@ export const ResumeResults: React.FC<ResumeResultsProps> = ({ resume, onBack }) 
             {/* Enhanced Detailed Feedback */}
             <div className="space-y-6">
               {[
-                { key: 'ATS', title: 'ATS Compatibility', icon: '🤖', color: 'blue', feedback: feedback.ATS },
-                { key: 'content', title: 'Content Quality', icon: '📝', color: 'green', feedback: feedback.content },
-                { key: 'toneAndStyle', title: 'Tone & Style', icon: '✍️', color: 'purple', feedback: feedback.toneAndStyle },
-                { key: 'structure', title: 'Structure & Format', icon: '🏗️', color: 'orange', feedback: feedback.structure },
-                { key: 'skills', title: 'Skills Alignment', icon: '🎯', color: 'red', feedback: feedback.skills }
+                {
+                  key: 'ATS',
+                  title: 'ATS Compatibility',
+                  icon: '🤖',
+                  color: 'blue',
+                  feedback: feedback.ATS,
+                  description: 'Applicant Tracking Systems (ATS) are used by 98% of Fortune 500 companies to automatically screen and rank resumes. This critical metric evaluates keyword optimization, format compatibility, and parsing success rates that determine whether your resume reaches human recruiters or gets filtered out by automated systems.'
+                },
+                {
+                  key: 'content',
+                  title: 'Content Quality',
+                  icon: '📝',
+                  color: 'green',
+                  feedback: feedback.content,
+                  description: 'Resume content quality assessment focuses on achievement quantification, impact statements, and compelling career narratives. High-quality content demonstrates your professional value proposition, showcases measurable accomplishments, and effectively communicates your unique qualifications to hiring managers and recruiters.'
+                },
+                {
+                  key: 'toneAndStyle',
+                  title: 'Tone & Style',
+                  icon: '✍️',
+                  color: 'purple',
+                  feedback: feedback.toneAndStyle,
+                  description: 'Professional writing standards and communication excellence are essential for resume success. This evaluation covers grammar accuracy, consistent professional voice, industry-appropriate terminology, and polished presentation that reflects attention to detail and communication skills employers seek in top candidates.'
+                },
+                {
+                  key: 'structure',
+                  title: 'Structure & Format',
+                  icon: '🏗️',
+                  color: 'orange',
+                  feedback: feedback.structure,
+                  description: 'Resume design and formatting optimization ensures maximum readability and visual impact. Proper document structure with clear visual hierarchy, consistent formatting, strategic use of white space, and ATS-friendly layout significantly improves your chances of getting noticed by busy recruiters scanning hundreds of resumes daily.'
+                },
+                {
+                  key: 'skills',
+                  title: 'Skills Alignment',
+                  icon: '🎯',
+                  color: 'red',
+                  feedback: feedback.skills,
+                  description: 'Job matching optimization and skills alignment analysis determines how well your qualifications match target position requirements. This comprehensive assessment evaluates technical competencies, soft skills relevance, industry experience alignment, and overall job fit that influences hiring decisions and interview opportunities.'
+                }
               ].map((section) => {
                 const grade = getScoreGrade(section.feedback.score)
                 return (
@@ -563,6 +635,7 @@ export const ResumeResults: React.FC<ResumeResultsProps> = ({ resume, onBack }) 
                       </div>
                     </div>
                     <div className="p-6">
+                      <p className="text-gray-600 mb-4">{section.description}</p>
                       <TipsList tips={section.feedback.tips} />
                     </div>
                   </div>

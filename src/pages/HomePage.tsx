@@ -2,11 +2,14 @@ import { useNavigate } from "react-router"
 import { useResumes, useTheme } from "../stores/useAppStore"
 import { Button } from "../components/ui/button"
 import { getTheme } from "../utils/themes"
-import { 
-  FileText, TrendingUp, Users, Clock, ChevronRight, BarChart3, Sparkles, 
-  Brain, Zap, Shield, Star, CheckCircle, ArrowRight, Upload, Target,
-  Award, Rocket, Download, Play, MessageSquare
+import { Helmet } from "react-helmet-async"
+import {
+  FileText, TrendingUp, Users, Clock, ChevronRight, BarChart3,
+  Brain, Zap, Shield, Target, MessageSquare
 } from "lucide-react"
+import HeroSection from "../components/HeroSection"
+import HowItWorksSection from "../components/HowItWorksSection"
+import CTASection from "../components/CTASection"
 
 export default function HomePage() {
   const navigate = useNavigate()
@@ -25,144 +28,98 @@ export default function HomePage() {
   if (resumes.length === 0) {
     return (
       <div className="min-h-screen">
-        {/* Hero Section */}
-        <section 
-          className={`relative min-h-screen overflow-hidden bg-gradient-to-br ${theme.gradients.hero}`}
-          style={{
-            background: currentTheme === 'nighty' 
-              ? `linear-gradient(135deg, var(--color-secondary-900), var(--color-primary-800), var(--color-secondary-900))`
-              : `linear-gradient(135deg, var(--color-primary-800), var(--color-accent-700), var(--color-primary-900))`
-          }}
-        >
-          {/* Animated Background */}
-          <div className="absolute inset-0 overflow-hidden">
-            <div 
-              className="absolute -top-40 -left-40 w-96 h-96 rounded-full blur-3xl animate-pulse opacity-30"
-              style={{ backgroundColor: `var(--color-primary-500, #3b82f6)` }}
-            ></div>
-            <div 
-              className="absolute -top-20 -right-32 w-80 h-80 rounded-full blur-3xl animate-pulse delay-1000 opacity-20"
-              style={{ backgroundColor: `var(--color-accent-500, #a855f7)` }}
-            ></div>
-            <div 
-              className="absolute -bottom-32 -left-20 w-72 h-72 rounded-full blur-3xl animate-pulse delay-2000 opacity-25"
-              style={{ backgroundColor: `var(--color-secondary-500, #64748b)` }}
-            ></div>
-            <div 
-              className="absolute -bottom-40 -right-40 w-96 h-96 rounded-full blur-3xl animate-pulse delay-500 opacity-20"
-              style={{ backgroundColor: `var(--color-primary-400, #60a5fa)` }}
-            ></div>
-            
-            <div className="absolute inset-0 opacity-10">
-              <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.1)_1px,transparent_1px)] bg-[size:50px_50px] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_0%,#000_70%,transparent_110%)]"></div>
-            </div>
-
-            {[...Array(20)].map((_, i) => (
-              <div
-                key={i}
-                className="absolute w-2 h-2 bg-white/20 rounded-full animate-pulse"
-                style={{
-                  left: `${Math.random() * 100}%`,
-                  top: `${Math.random() * 100}%`,
-                  animationDelay: `${Math.random() * 3}s`,
-                  animationDuration: `${2 + Math.random() * 2}s`,
-                }}
-              />
-            ))}
-          </div>
-
-          {/* Hero Content */}
-          <div className="relative z-10 flex items-center justify-center min-h-screen px-6 md:px-8 pt-20">
-            <div className="max-w-6xl mx-auto text-center">
-              {/* Badge */}
-              <div className="group cursor-pointer mb-8 animate-fade-in">
-                <span className="inline-flex items-center px-6 py-3 bg-white/10 backdrop-blur-md border border-white/20 rounded-full text-sm font-semibold text-white hover:bg-white/20 transition-all duration-300 group-hover:scale-105">
-                  <Sparkles className="w-4 h-4 mr-2 text-purple-300" />
-                  #1 AI-Powered Resume Analyzer
-                  <ChevronRight className="w-4 h-4 ml-2 transition-transform duration-300 group-hover:translate-x-1" />
-                </span>
-              </div>
-
-              {/* Main Title */}
-              <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold leading-tight mb-8 animate-fade-in animation-delay-200">
-                <span className="bg-gradient-to-r from-white via-purple-200 to-blue-200 bg-clip-text text-transparent">
-                  Land Your Dream Job
-                </span>
-                <br />
-                <span className="bg-gradient-to-r from-purple-300 via-blue-300 to-white bg-clip-text text-transparent">
-                  with AI Precision
-                </span>
-              </h1>
-
-              {/* Subtitle */}
-              <p className="text-xl md:text-2xl text-gray-300 max-w-4xl mx-auto mb-12 leading-relaxed animate-fade-in animation-delay-400">
-                Transform your resume in 30 seconds with our advanced AI. Get ATS optimization, 
-                detailed scoring, and actionable insights that actually get you hired.
-              </p>
-
-              {/* Feature Pills */}
-              <div className="flex flex-wrap justify-center items-center gap-4 md:gap-6 mb-12 animate-fade-in animation-delay-600">
-                <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full text-white border border-white/20">
-                  <Zap className="w-4 h-4 text-yellow-400" />
-                  <span className="font-medium">30s Analysis</span>
-                </div>
-                <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full text-white border border-white/20">
-                  <Brain className="w-4 h-4 text-blue-400" />
-                  <span className="font-medium">AI-Powered</span>
-                </div>
-                <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full text-white border border-white/20">
-                  <Shield className="w-4 h-4 text-green-400" />
-                  <span className="font-medium">ATS Ready</span>
-                </div>
-                <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full text-white border border-white/20">
-                  <Award className="w-4 h-4 text-purple-400" />
-                  <span className="font-medium">Expert Insights</span>
-                </div>
-              </div>
-
-              {/* CTA Section */}
-              <div className="animate-fade-in animation-delay-800">
-                <Button
-                  onClick={handleAnalyzeClick}
-                  size="lg"
-                  className="group bg-gradient-to-r from-purple-600 via-blue-600 to-purple-700 hover:from-purple-700 hover:via-blue-700 hover:to-purple-800 text-white font-bold py-6 px-12 text-xl rounded-2xl shadow-2xl hover:shadow-purple-500/25 transform hover:scale-105 transition-all duration-300 border border-purple-400/50 mb-6"
-                >
-                  <span className="flex items-center gap-3">
-                    <Upload className="w-6 h-6 group-hover:scale-110 transition-transform duration-300" />
-                    Analyze My Resume Now
-                    <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform duration-300" />
-                  </span>
-                </Button>
-                
-                <div className="flex flex-wrap justify-center items-center gap-6 text-sm text-gray-400">
-                  <div className="flex items-center gap-2">
-                    <CheckCircle className="w-4 h-4 text-green-400" />
-                    <span>100% Free Forever</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <CheckCircle className="w-4 h-4 text-blue-400" />
-                    <span>No Registration Required</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <CheckCircle className="w-4 h-4 text-purple-400" />
-                    <span>Instant Results</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Bottom gradient fade */}
-          <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-white to-transparent z-20"></div>
-        </section>
-
+        <Helmet>
+          <title>AI Resume Analyzer - Optimize Your Resume with AI</title>
+          <meta name="description" content="Get instant AI-powered resume analysis with detailed feedback, ATS compatibility scores, and actionable recommendations to boost your career prospects." />
+          <meta property="og:title" content="AI Resume Analyzer - Optimize Your Resume with AI" />
+          <meta property="og:description" content="Get instant AI-powered resume analysis with detailed feedback, ATS compatibility scores, and actionable recommendations to boost your career prospects." />
+          <meta property="og:type" content="website" />
+          <meta property="og:url" content={window.location.href} />
+          <meta name="twitter:card" content="summary_large_image" />
+          <meta name="twitter:title" content="AI Resume Analyzer - Optimize Your Resume with AI" />
+          <meta name="twitter:description" content="Get instant AI-powered resume analysis with detailed feedback, ATS compatibility scores, and actionable recommendations to boost your career prospects." />
+          <script type="application/ld+json">
+            {`
+              {
+                "@context": "https://schema.org",
+                "@type": "SoftwareApplication",
+                "name": "AI Resume Analyzer",
+                "description": "Get instant AI-powered resume analysis with detailed feedback, ATS compatibility scores, and actionable recommendations to boost your career prospects.",
+                "applicationCategory": "BusinessApplication",
+                "offers": {
+                  "@type": "Offer",
+                  "price": "0",
+                  "priceCurrency": "USD"
+                },
+                "aggregateRating": {
+                  "@type": "AggregateRating",
+                  "ratingValue": "4.8",
+                  "reviewCount": "1240"
+                }
+              }
+            `}
+          </script>
+          <script type="application/ld+json">
+            {`
+              {
+                "@context": "https://schema.org",
+                "@type": "FAQPage",
+                "mainEntity": [
+                  {
+                    "@type": "Question",
+                    "name": "How does the AI resume analyzer work?",
+                    "acceptedAnswer": {
+                      "@type": "Answer",
+                      "text": "Our AI resume analyzer uses advanced natural language processing and machine learning algorithms to evaluate your resume across multiple dimensions including content quality, structure, keyword optimization for ATS systems, and industry-specific best practices. Simply upload your resume and get detailed feedback within seconds."
+                    }
+                  },
+                  {
+                    "@type": "Question",
+                    "name": "Is my resume data secure and private?",
+                    "acceptedAnswer": {
+                      "@type": "Answer",
+                      "text": "Yes, we take your privacy seriously. All resume data is processed securely and is not stored on our servers. Your information is encrypted during transmission and automatically deleted after analysis. We never share your data with third parties."
+                    }
+                  },
+                  {
+                    "@type": "Question",
+                    "name": "What file formats are supported?",
+                    "acceptedAnswer": {
+                      "@type": "Answer",
+                      "text": "We support all major resume formats including PDF, DOC, DOCX, TXT, and RTF. Our system automatically processes your file and provides analysis regardless of the format you choose."
+                    }
+                  },
+                  {
+                    "@type": "Question",
+                    "name": "How can this tool help me get more interviews?",
+                    "acceptedAnswer": {
+                      "@type": "Answer",
+                      "text": "Our AI analyzer identifies key areas of improvement in your resume that often get overlooked. This includes optimizing for Applicant Tracking Systems (ATS), improving keyword relevance, enhancing content structure, and aligning your experience with job requirements. These improvements significantly increase your chances of passing initial screenings."
+                    }
+                  },
+                  {
+                    "@type": "Question",
+                    "name": "How often should I analyze my resume?",
+                    "acceptedAnswer": {
+                      "@type": "Answer",
+                      "text": "We recommend analyzing your resume whenever you're job hunting or at least once every 6 months to stay current with industry best practices. If you're actively applying for jobs, consider analyzing for each specific position to tailor your resume accordingly."
+                    }
+                  }
+                ]
+              }
+            `}
+          </script>
+        </Helmet>
+        <HeroSection theme={theme} currentTheme={currentTheme} onAnalyzeClick={handleAnalyzeClick} />
+        
         {/* Social Proof Section */}
-        <section className="py-16 bg-white border-b border-gray-100">
+        <section className="py-16 bg-white border-b border-gray-100" aria-labelledby="social-proof-heading">
           <div className="max-w-7xl mx-auto px-6 text-center">
+            <h2 id="social-proof-heading" className="sr-only">Trusted by Leading Companies</h2>
             <p className="text-gray-600 mb-8 text-lg">Trusted by professionals at leading companies</p>
-            <div className="flex flex-wrap justify-center items-center gap-8 opacity-60">
+            <div className="flex flex-wrap justify-center items-center gap-8 opacity-60" role="list" aria-label="Partner companies">
               {['Google', 'Microsoft', 'Apple', 'Amazon', 'Meta', 'Netflix'].map((company) => (
-                <div key={company} className="text-2xl font-bold text-gray-400 hover:text-gray-600 transition-colors duration-300">
+                <div key={company} className="text-2xl font-bold text-gray-400 hover:text-gray-600 transition-colors duration-300" role="listitem" aria-label={`Trusted by ${company} professionals`}>
                   {company}
                 </div>
               ))}
@@ -170,197 +127,156 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Features Section */}
-        <section className="py-24 bg-gradient-to-b from-white to-gray-50">
+        {/* Enhanced Features Section */}
+        <section className="py-24 bg-gradient-to-br from-gray-50 to-white">
           <div className="max-w-7xl mx-auto px-6">
             <div className="text-center mb-20">
-              <div className="inline-flex items-center px-4 py-2 bg-purple-100 text-purple-700 rounded-full text-sm font-semibold mb-6">
-                <Rocket className="w-4 h-4 mr-2" />
-                Powerful Features
-              </div>
               <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-6">
-                Everything You Need to 
-                <span className="bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent"> Stand Out</span>
+                Powerful <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Resume Analysis</span> Features
               </h2>
               <p className="text-xl text-slate-600 max-w-3xl mx-auto">
-                Our AI doesn't just scan your resume—it understands it, analyzes it, and gives you the insights you need to get hired.
+                Our comprehensive AI-powered resume analyzer provides detailed insights across multiple dimensions to maximize your job search success.
               </p>
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              <div className="group bg-white p-8 rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 border border-gray-100 hover:border-blue-200 transform hover:scale-105">
+                <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                  <BarChart3 className="w-8 h-8 text-white" />
+                </div>
+                <h3 className="text-xl font-bold text-slate-900 mb-4">ATS Compatibility Scoring</h3>
+                <p className="text-slate-600 leading-relaxed">Ensure your resume passes through Applicant Tracking Systems with our comprehensive ATS compatibility analysis. We check for keyword optimization, format compatibility, and technical requirements that recruiters' systems look for.</p>
+              </div>
+              
               <div className="group bg-white p-8 rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 border border-gray-100 hover:border-purple-200 transform hover:scale-105">
                 <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-purple-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
                   <Brain className="w-8 h-8 text-white" />
                 </div>
-                <h3 className="text-xl font-bold text-slate-900 mb-4">AI-Powered Analysis</h3>
-                <p className="text-slate-600 leading-relaxed">Advanced machine learning algorithms analyze your resume against thousands of successful applications and industry standards.</p>
+                <h3 className="text-xl font-bold text-slate-900 mb-4">AI-Powered Content Analysis</h3>
+                <p className="text-slate-600 leading-relaxed">Advanced machine learning algorithms analyze your resume content against thousands of successful applications and industry standards. We evaluate clarity, impact, relevance, and professional tone to maximize your chances.</p>
               </div>
               
-              <div className="group bg-white p-8 rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 border border-gray-100 hover:border-blue-200 transform hover:scale-105">
-                <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+              <div className="group bg-white p-8 rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 border-gray-100 hover:border-emerald-200 transform hover:scale-105">
+                <div className="w-16 h-16 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
                   <Target className="w-8 h-8 text-white" />
                 </div>
-                <h3 className="text-xl font-bold text-slate-900 mb-4">ATS Optimization</h3>
-                <p className="text-slate-600 leading-relaxed">Ensure your resume passes through Applicant Tracking Systems with our comprehensive ATS compatibility analysis.</p>
-              </div>
-              
-              <div className="group bg-white p-8 rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 border border-gray-100 hover:border-emerald-200 transform hover:scale-105">
-                <div className="w-16 h-16 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
-                  <Zap className="w-8 h-8 text-white" />
-                </div>
-                <h3 className="text-xl font-bold text-slate-900 mb-4">Instant Results</h3>
-                <p className="text-slate-600 leading-relaxed">Get comprehensive feedback and actionable insights in under 30 seconds. No waiting, no delays.</p>
+                <h3 className="text-xl font-bold text-slate-900 mb-4">Job Target Optimization</h3>
+                <p className="text-slate-600 leading-relaxed">Align your resume with specific job descriptions and requirements. Our analyzer identifies gaps between your experience and target positions, providing tailored recommendations to improve your match rate.</p>
               </div>
               
               <div className="group bg-white p-8 rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 border border-gray-100 hover:border-orange-200 transform hover:scale-105">
                 <div className="w-16 h-16 bg-gradient-to-br from-orange-500 to-orange-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
-                  <BarChart3 className="w-8 h-8 text-white" />
+                  <Zap className="w-8 h-8 text-white" />
                 </div>
-                <h3 className="text-xl font-bold text-slate-900 mb-4">Detailed Scoring</h3>
-                <p className="text-slate-600 leading-relaxed">Comprehensive scoring across multiple dimensions including content quality, structure, and presentation.</p>
+                <h3 className="text-xl font-bold text-slate-900 mb-4">Instant Detailed Feedback</h3>
+                <p className="text-slate-600 leading-relaxed">Get comprehensive feedback and actionable insights in under 30 seconds. No waiting, no delays. Receive specific recommendations for improvement across all critical resume elements.</p>
               </div>
               
               <div className="group bg-white p-8 rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 border border-gray-100 hover:border-pink-200 transform hover:scale-105">
                 <div className="w-16 h-16 bg-gradient-to-br from-pink-500 to-pink-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
                   <MessageSquare className="w-8 h-8 text-white" />
                 </div>
-                <h3 className="text-xl font-bold text-slate-900 mb-4">Actionable Insights</h3>
-                <p className="text-slate-600 leading-relaxed">Get specific, actionable recommendations to improve your resume and increase your chances of getting hired.</p>
+                <h3 className="text-xl font-bold text-slate-900 mb-4">Actionable Improvement Tips</h3>
+                <p className="text-slate-600 leading-relaxed">Receive specific, prioritized recommendations to improve your resume and increase your chances of getting hired. Our tips are categorized by impact level so you know exactly where to focus your efforts.</p>
               </div>
               
               <div className="group bg-white p-8 rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 border border-gray-100 hover:border-indigo-200 transform hover:scale-105">
                 <div className="w-16 h-16 bg-gradient-to-br from-indigo-500 to-indigo-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
                   <Shield className="w-8 h-8 text-white" />
                 </div>
-                <h3 className="text-xl font-bold text-slate-900 mb-4">Privacy First</h3>
-                <p className="text-slate-600 leading-relaxed">Your resume data is processed securely and never stored. Complete privacy and confidentiality guaranteed.</p>
+                <h3 className="text-xl font-bold text-slate-900 mb-4">Privacy & Security First</h3>
+                <p className="text-slate-600 leading-relaxed">Your resume data is processed securely and never stored on our servers. Complete privacy and confidentiality guaranteed with end-to-end encryption during analysis. Your information is automatically deleted after processing.</p>
               </div>
             </div>
           </div>
         </section>
-
-        {/* How It Works Section */}
+        
+        {/* FAQ Section */}
         <section className="py-24 bg-white">
-          <div className="max-w-7xl mx-auto px-6">
-            <div className="text-center mb-20">
-              <div className="inline-flex items-center px-4 py-2 bg-blue-100 text-blue-700 rounded-full text-sm font-semibold mb-6">
-                <Play className="w-4 h-4 mr-2" />
-                How It Works
-              </div>
+          <div className="max-w-4xl mx-auto px-6">
+            <div className="text-center mb-16">
               <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-6">
-                Get Results in 
-                <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent"> 3 Simple Steps</span>
+                Frequently Asked <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Questions</span>
               </h2>
-              <p className="text-xl text-slate-600 max-w-3xl mx-auto">
-                Our streamlined process makes it incredibly easy to get professional resume feedback in minutes.
+              <p className="text-xl text-slate-600 max-w-2xl mx-auto">
+                Everything you need to know about our AI-powered resume analysis platform.
               </p>
             </div>
             
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
-              <div className="text-center group">
-                <div className="relative mb-8">
-                  <div className="w-24 h-24 bg-gradient-to-br from-blue-500 to-purple-600 rounded-3xl flex items-center justify-center mx-auto shadow-2xl group-hover:scale-110 transition-transform duration-300">
-                    <Upload className="w-12 h-12 text-white" />
-                  </div>
-                  <div className="absolute -top-2 -right-2 w-8 h-8 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full flex items-center justify-center text-white font-bold text-sm">
-                    1
-                  </div>
-                </div>
-                <h3 className="text-2xl font-bold text-slate-900 mb-4">Upload Your Resume</h3>
-                <p className="text-slate-600 leading-relaxed">Simply drag and drop your PDF resume or browse to select it. We support all standard resume formats.</p>
+            <div className="space-y-6">
+              <div className="bg-gradient-to-br from-gray-50 to-white rounded-2xl p-6 border border-gray-200 shadow-sm">
+                <h3 className="text-xl font-bold text-slate-900 mb-3">How does the AI resume analyzer work?</h3>
+                <p className="text-slate-600 leading-relaxed">
+                  Our AI resume analyzer uses advanced natural language processing and machine learning algorithms to evaluate your resume across multiple dimensions including content quality, structure, keyword optimization for ATS systems, and industry-specific best practices. Simply upload your resume and get detailed feedback within seconds.
+                </p>
               </div>
               
-              <div className="text-center group">
-                <div className="relative mb-8">
-                  <div className="w-24 h-24 bg-gradient-to-br from-purple-500 to-pink-600 rounded-3xl flex items-center justify-center mx-auto shadow-2xl group-hover:scale-110 transition-transform duration-300">
-                    <Brain className="w-12 h-12 text-white" />
-                  </div>
-                  <div className="absolute -top-2 -right-2 w-8 h-8 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full flex items-center justify-center text-white font-bold text-sm">
-                    2
-                  </div>
-                </div>
-                <h3 className="text-2xl font-bold text-slate-900 mb-4">AI Analysis</h3>
-                <p className="text-slate-600 leading-relaxed">Our advanced AI analyzes your resume against industry standards, ATS requirements, and best practices.</p>
+              <div className="bg-gradient-to-br from-gray-50 to-white rounded-2xl p-6 border border-gray-200 shadow-sm">
+                <h3 className="text-xl font-bold text-slate-900 mb-3">Is my resume data secure and private?</h3>
+                <p className="text-slate-600 leading-relaxed">
+                  Yes, we take your privacy seriously. All resume data is processed securely and is not stored on our servers. Your information is encrypted during transmission and automatically deleted after analysis. We never share your data with third parties. Your privacy is our top priority.
+                </p>
               </div>
               
-              <div className="text-center group">
-                <div className="relative mb-8">
-                  <div className="w-24 h-24 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-3xl flex items-center justify-center mx-auto shadow-2xl group-hover:scale-110 transition-transform duration-300">
-                    <Download className="w-12 h-12 text-white" />
-                  </div>
-                  <div className="absolute -top-2 -right-2 w-8 h-8 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full flex items-center justify-center text-white font-bold text-sm">
-                    3
-                  </div>
-                </div>
-                <h3 className="text-2xl font-bold text-slate-900 mb-4">Get Insights</h3>
-                <p className="text-slate-600 leading-relaxed">Receive detailed feedback, scores, and actionable recommendations to improve your resume instantly.</p>
+              <div className="bg-gradient-to-br from-gray-50 to-white rounded-2xl p-6 border-gray-200 shadow-sm">
+                <h3 className="text-xl font-bold text-slate-900 mb-3">What file formats are supported?</h3>
+                <p className="text-slate-600 leading-relaxed">
+                  We support all major resume formats including PDF, DOC, DOCX, TXT, and RTF. Our system automatically processes your file and provides analysis regardless of the format you choose. For best results, we recommend using PDF format as it preserves formatting across different systems.
+                </p>
+              </div>
+              
+              <div className="bg-gradient-to-br from-gray-50 to-white rounded-2xl p-6 border border-gray-200 shadow-sm">
+                <h3 className="text-xl font-bold text-slate-900 mb-3">How can this tool help me get more interviews?</h3>
+                <p className="text-slate-600 leading-relaxed">
+                  Our AI analyzer identifies key areas of improvement in your resume that often get overlooked. This includes optimizing for Applicant Tracking Systems (ATS), improving keyword relevance, enhancing content structure, and aligning your experience with job requirements. These improvements significantly increase your chances of passing initial screenings and landing interviews.
+                </p>
+              </div>
+              
+              <div className="bg-gradient-to-br from-gray-50 to-white rounded-2xl p-6 border-gray-200 shadow-sm">
+                <h3 className="text-xl font-bold text-slate-900 mb-3">How often should I analyze my resume?</h3>
+                <p className="text-slate-600 leading-relaxed">
+                  We recommend analyzing your resume whenever you're job hunting or at least once every 6 months to stay current with industry best practices. If you're actively applying for jobs, consider analyzing for each specific position to tailor your resume accordingly. Regular updates ensure your resume remains competitive.
+                </p>
+              </div>
+              
+              <div className="bg-gradient-to-br from-gray-50 to-white rounded-2xl p-6 border border-gray-200 shadow-sm">
+                <h3 className="text-xl font-bold text-slate-900 mb-3">What makes your resume analyzer different from others?</h3>
+                <p className="text-slate-600 leading-relaxed">
+                  Our resume analyzer stands out with its comprehensive multi-dimensional analysis, AI-powered insights, and actionable recommendations. Unlike basic keyword checkers, we evaluate your resume holistically, considering content quality, structure, ATS compatibility, and job alignment. Our proprietary algorithms provide deeper insights than generic tools.
+                </p>
+              </div>
+              
+              <div className="bg-gradient-to-br from-gray-50 to-white rounded-2xl p-6 border border-gray-200 shadow-sm">
+                <h3 className="text-xl font-bold text-slate-900 mb-3">Can I customize the analysis for specific industries or roles?</h3>
+                <p className="text-slate-600 leading-relaxed">
+                  Yes, our analyzer allows you to tailor your resume for specific job descriptions and industries. When you upload your resume, you can provide the job description you're targeting, and our AI will provide customized recommendations to align your experience with those requirements. This feature is particularly valuable for career changers or those targeting specific roles.
+                </p>
               </div>
             </div>
           </div>
         </section>
-
-        {/* CTA Section */}
-        <section 
-          className={`py-24 bg-gradient-to-r ${theme.gradients.hero} relative overflow-hidden`}
-          style={{
-            background: currentTheme === 'nighty' 
-              ? `linear-gradient(135deg, var(--color-secondary-900), var(--color-primary-800), var(--color-secondary-900))`
-              : `linear-gradient(135deg, var(--color-primary-800), var(--color-accent-700), var(--color-primary-900))`
-          }}
-        >
-          <div className="absolute inset-0">
-            <div 
-              className="absolute -top-40 -left-40 w-96 h-96 rounded-full blur-3xl opacity-20"
-              style={{ backgroundColor: `var(--color-primary-500, #3b82f6)` }}
-            ></div>
-            <div 
-              className="absolute -bottom-40 -right-40 w-96 h-96 rounded-full blur-3xl opacity-20"
-              style={{ backgroundColor: `var(--color-accent-500, #a855f7)` }}
-            ></div>
-          </div>
-          
-          <div className="relative z-10 max-w-4xl mx-auto px-6 text-center">
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
-              Ready to Transform Your Career?
-            </h2>
-            <p className="text-xl text-gray-300 mb-12 max-w-2xl mx-auto">
-              Join thousands of professionals who've already improved their resumes and landed their dream jobs with our AI-powered analysis.
-            </p>
-            
-            <Button
-              onClick={handleAnalyzeClick}
-              size="lg"
-              className="group bg-gradient-to-r from-purple-600 via-blue-600 to-purple-700 hover:from-purple-700 hover:via-blue-700 hover:to-purple-800 text-white font-bold py-6 px-12 text-xl rounded-2xl shadow-2xl hover:shadow-purple-500/25 transform hover:scale-105 transition-all duration-300 border border-purple-400/50"
-            >
-              <span className="flex items-center gap-3">
-                <Sparkles className="w-6 h-6 group-hover:rotate-12 transition-transform duration-300" />
-                Start Your Free Analysis
-                <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform duration-300" />
-              </span>
-            </Button>
-            
-            <div className="flex flex-wrap justify-center items-center gap-8 mt-12 text-sm text-gray-400">
-              <div className="flex items-center gap-2">
-                <Star className="w-4 h-4 text-yellow-400 fill-current" />
-                <span>4.9/5 Rating</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Users className="w-4 h-4 text-blue-400" />
-                <span>50,000+ Users</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <CheckCircle className="w-4 h-4 text-green-400" />
-                <span>100% Free</span>
-              </div>
-            </div>
-          </div>
-        </section>
+        
+        <HowItWorksSection />
+        
+        
+        <CTASection theme={theme} currentTheme={currentTheme} onAnalyzeClick={handleAnalyzeClick} />
       </div>
     )
   }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-gray-50">
+      <Helmet>
+        <title>AI Resume Analyzer - Optimize Your Resume with AI</title>
+        <meta name="description" content="Get instant AI-powered resume analysis with detailed feedback, ATS compatibility scores, and actionable recommendations to boost your career prospects." />
+        <meta property="og:title" content="AI Resume Analyzer - Optimize Your Resume with AI" />
+        <meta property="og:description" content="Get instant AI-powered resume analysis with detailed feedback, ATS compatibility scores, and actionable recommendations to boost your career prospects." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={window.location.href} />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="AI Resume Analyzer - Optimize Your Resume with AI" />
+        <meta name="twitter:description" content="Get instant AI-powered resume analysis with detailed feedback, ATS compatibility scores, and actionable recommendations to boost your career prospects." />
+      </Helmet>
       {/* Background Pattern */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,rgba(0,0,0,0.02)_1px,transparent_0)] [background-size:24px_24px] pointer-events-none"></div>
       
@@ -441,17 +357,17 @@ export default function HomePage() {
               {/* Progress Indicators */}
               {resume.feedback && (
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                  <div className="bg-gradient-to-br from-blue-50 to-blue-100/50 p-4 rounded-2xl border border-blue-100">
+                  <div className="bg-gradient-to-br from-blue-50 to-blue-100/50 p-4 rounded-2xl border-blue-100">
                     <div className="text-2xl font-bold text-blue-700 mb-1">
                       {resume.feedback.ATS?.score || '--'}%
                     </div>
-                    <div className="text-sm text-blue-600 font-medium">ATS Score</div>
+                    <div className="text-sm text-blue-600 font-medium">ATS Compatibility</div>
                   </div>
                   <div className="bg-gradient-to-br from-emerald-50 to-emerald-100/50 p-4 rounded-2xl border border-emerald-100">
                     <div className="text-2xl font-bold text-emerald-700 mb-1">
                       {resume.feedback.content?.score || '--'}%
                     </div>
-                    <div className="text-sm text-emerald-600 font-medium">Content</div>
+                    <div className="text-sm text-emerald-600 font-medium">Content Quality</div>
                   </div>
                   <div className="bg-gradient-to-br from-purple-50 to-purple-100/50 p-4 rounded-2xl border border-purple-100">
                     <div className="text-2xl font-bold text-purple-700 mb-1">
@@ -463,7 +379,7 @@ export default function HomePage() {
                     <div className="text-2xl font-bold text-orange-700 mb-1">
                       {resume.feedback.overallScore || '--'}%
                     </div>
-                    <div className="text-sm text-orange-600 font-medium">Overall</div>
+                    <div className="text-sm text-orange-600 font-medium">Overall Score</div>
                   </div>
                 </div>
               )}

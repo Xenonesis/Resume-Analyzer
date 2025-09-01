@@ -1,0 +1,17 @@
+# robots.txt for Resume Analysis Application
+# This file controls how web crawlers can access our site
+
+# Allow all crawlers to access the site
+User-agent: *
+
+# Prevent crawling of authentication pages which may contain sensitive user information
+Disallow: /auth/
+
+# Prevent crawling of analysis pages which may contain sensitive resume data
+Disallow: /analyze/
+
+# Allow crawling of all other pages on the site
+Allow: /
+
+# Reference to our sitemap for better indexing
+Sitemap: https://yourdomain.com/sitemap.xml

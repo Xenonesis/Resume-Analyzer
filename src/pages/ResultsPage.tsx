@@ -3,6 +3,7 @@ import { useNavigate, useParams } from 'react-router'
 import { useResumes } from '@/stores/useAppStore'
 import { ResumeResults } from '@/components/ResumeResults'
 import { ModernSpinner } from '@/components/ui/modern-spinner'
+import { Helmet } from 'react-helmet-async'
 import { 
   ArrowLeft, 
   FileText, 
@@ -95,6 +96,10 @@ export const ResultsPage: React.FC = () => {
   if (isLoading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-gray-50 flex items-center justify-center pt-18">
+        <Helmet>
+          <title>Loading Resume Analysis - AI Resume Analyzer</title>
+          <meta name="description" content="Loading your comprehensive resume analysis. Please wait while we prepare detailed insights and recommendations." />
+        </Helmet>
         <div className="bg-white/90 backdrop-blur-sm p-12 rounded-3xl shadow-2xl border border-white/50">
           <ModernSpinner 
             size="lg" 
@@ -117,6 +122,10 @@ export const ResultsPage: React.FC = () => {
   if (!resume) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-gray-50 flex items-center justify-center pt-18">
+        <Helmet>
+          <title>Resume Analysis Not Found - AI Resume Analyzer</title>
+          <meta name="description" content="The resume analysis you're looking for doesn't exist or may have been removed from our system." />
+        </Helmet>
         <div className="bg-white/90 backdrop-blur-sm p-16 rounded-3xl shadow-2xl border border-white/50 text-center max-w-md">
           <div className="w-20 h-20 bg-gradient-to-br from-red-50 to-red-100 rounded-3xl flex items-center justify-center mx-auto mb-8 animate-pulse">
             <AlertCircle className="w-10 h-10 text-red-600" />
@@ -156,6 +165,70 @@ export const ResultsPage: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-gray-50 pt-18">
+      <Helmet>
+        <title>{`Resume Analysis Results - Score: ${overallScore}/100`}</title>
+        <meta name="description" content={`Detailed resume analysis report with overall score of ${overallScore}/100. Get actionable insights to improve your resume.`} />
+        <meta property="og:title" content={`Resume Analysis Results - Score: ${overallScore}/100`} />
+        <meta property="og:description" content={`Detailed resume analysis report with overall score of ${overallScore}/100. Get actionable insights to improve your resume.`} />
+        <meta property="og:type" content="article" />
+        <meta property="og:url" content={window.location.href} />
+        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:title" content={`Resume Analysis Results - Score: ${overallScore}/100`} />
+        <meta name="twitter:description" content={`Detailed resume analysis report with overall score of ${overallScore}/100. Get actionable insights to improve your resume.`} />
+        <script type="application/ld+json">
+          {`
+            {
+              "@context": "https://schema.org",
+              "@type": "BreadcrumbList",
+              "itemListElement": [
+                {
+                  "@type": "ListItem",
+                  "position": 1,
+                  "name": "Home",
+                  "item": "${window.location.origin}/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 2,
+                  "name": "Upload",
+                  "item": "${window.location.origin}/upload"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 3,
+                  "name": "Analysis",
+                  "item": "${window.location.origin}/analyze"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 4,
+                  "name": "Results",
+                  "item": "${window.location.origin}/results/${resumeId}"
+                }
+              ]
+            }
+          `}
+        </script>
+        <script type="application/ld+json">
+          {`
+            {
+              "@context": "https://schema.org",
+              "@type": "Review",
+              "itemReviewed": {
+                "@type": "Product",
+                "name": "Resume Document"
+              },
+              "reviewRating": {
+                "@type": "Rating",
+                "ratingValue": "${overallScore}",
+                "bestRating": "100",
+                "worstRating": "0"
+              },
+              "reviewBody": "Comprehensive AI-powered analysis of resume document with detailed feedback on content quality, structure, ATS compatibility, and actionable recommendations for improvement. Overall score of ${overallScore}/100 indicates ${performanceLevel.level.toLowerCase()} performance."
+            }
+          `}
+        </script>
+      </Helmet>
       <div className="max-w-7xl mx-auto px-6 py-8">
         {/* Enhanced Navigation Header */}
         <div className="mb-8">
@@ -165,8 +238,9 @@ export const ResultsPage: React.FC = () => {
               variant="ghost"
               size="sm"
               className="group hover:bg-white/80 hover:shadow-md transition-all duration-200"
+              aria-label="Return to resume dashboard homepage"
             >
-              <ArrowLeft className="w-4 h-4 mr-2 group-hover:-translate-x-1 transition-transform duration-300" />
+              <ArrowLeft className="w-4 h-4 mr-2 group-hover:-translate-x-1 transition-transform duration-300" aria-hidden="true" />
               Back to Dashboard
             </Button>
             

@@ -3,6 +3,7 @@ import { useResumes } from '@/stores/useAppStore'
 import { Feedback, Resume } from '@/types'
 import { TrendingUp, FileText, Target, Clock } from 'lucide-react'
 import { MetricCard } from '@/components/dashboard/MetricCard'
+import { Helmet } from 'react-helmet-async'
 import { ProgressChart } from '@/components/dashboard/ProgressChart'
 import { TimeSeriesChart } from '@/components/dashboard/TimeSeriesChart'
 import { DashboardFilters, FilterOptions } from '@/components/dashboard/DashboardFilters'
@@ -300,6 +301,17 @@ const DashboardPage: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 p-6">
+      <Helmet>
+        <title>Resume Analytics Dashboard - AI Resume Analyzer</title>
+        <meta name="description" content="Monitor and analyze your resume performance metrics. Track improvements over time and identify areas for enhancement." />
+        <meta property="og:title" content="Resume Analytics Dashboard - AI Resume Analyzer" />
+        <meta property="og:description" content="Monitor and analyze your resume performance metrics. Track improvements over time and identify areas for enhancement." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={window.location.href} />
+        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:title" content="Resume Analytics Dashboard - AI Resume Analyzer" />
+        <meta name="twitter:description" content="Monitor and analyze your resume performance metrics. Track improvements over time and identify areas for enhancement." />
+      </Helmet>
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="mb-8">
