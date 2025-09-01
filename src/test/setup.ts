@@ -2,7 +2,7 @@ import '@testing-library/jest-dom'
 import { vi } from 'vitest'
 
 // Mock Puter.js for testing
-(global as any).puter = {
+((globalThis || window || global) as any).puter = {
   auth: {
     signIn: vi.fn(),
     signOut: vi.fn(),

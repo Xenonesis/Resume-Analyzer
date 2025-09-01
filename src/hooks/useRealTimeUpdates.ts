@@ -30,7 +30,7 @@ export const useRealTimeUpdates = (): RealTimeUpdateHook => {
   const [isConnected, setIsConnected] = useState(true)
   const [lastUpdate, setLastUpdate] = useState<Date | null>(null)
   const previousResumesRef = useRef<Resume[]>([])
-  const intervalRef = useRef<NodeJS.Timeout | null>(null)
+  const intervalRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   // Generate notification ID
   const generateNotificationId = () => `notification_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`
