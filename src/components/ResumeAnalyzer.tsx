@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
-import { useAnalysisActions, useResumeActions, useAIConfig } from '@/stores/useAppStore'
+import { useAnalysisActions, useAIConfig } from '@/stores/useAppStore'
+import { useResumeData } from '@/hooks/useResumeData'
 import { aiService } from '@/services/aiService'
 import puterService from '@/services/puterService'
 import { generateId } from '@/utils/uuid'
@@ -26,8 +27,8 @@ export const ResumeAnalyzer: React.FC<ResumeAnalyzerProps> = ({
   const [error, setError] = useState<string | null>(null)
 
   const { setAnalyzing, setAnalysisProgress, setAnalysisError } = useAnalysisActions()
-  const { addResume } = useResumeActions()
   const { isConfigured } = useAIConfig()
+  const { saveNewResume } = useResumeData(true) // Pass true for isAuthenticated since this component is only used when authenticated
 
   // Helper function to create fallback feedback
   const createFallbackFeedback = (_aiResponseText: string): Feedback => {
@@ -311,10 +312,8 @@ JSON format:
       setProgress('Saving results...')
       setAnalysisProgress('Saving results...')
       
-      await puterService.kv.set(`resume_${resume.id}`, JSON.stringify(resume))
-      
-      // Step 7: Update state
-      addResume(resume)
+      // Save to localStorage and update state
+      saveNewResume(resume)
       
       setProgress('Analysis complete!')
       setAnalysisProgress('Analysis complete!')

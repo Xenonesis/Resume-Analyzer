@@ -35,32 +35,33 @@ export interface AIProviderConfig {
   description: string
 }
 
+// Updated to use empty arrays for models that will be fetched dynamically
 export const AI_PROVIDERS: Record<AIProvider, AIProviderConfig> = {
   openai: {
     name: 'OpenAI',
     baseUrl: 'https://api.openai.com/v1',
-    models: ['gpt-4', 'gpt-4-turbo', 'gpt-3.5-turbo'],
+    models: [], // Will be fetched dynamically
     requiresApiKey: true,
     description: 'OpenAI GPT models including GPT-4 and GPT-3.5-turbo'
   },
   google: {
     name: 'Google Gemini',
     baseUrl: 'https://generativelanguage.googleapis.com/v1beta',
-    models: ['gemini-1.5-pro', 'gemini-2.0-flash-exp', 'gemini-2.5-pro-preview'],
+    models: [], // Will be fetched dynamically
     requiresApiKey: true,
     description: 'Google\'s Gemini AI models'
   },
   mistral: {
     name: 'Mistral AI',
     baseUrl: 'https://api.mistral.ai/v1',
-    models: ['mistral-7b-instruct', 'mixtral-8x7b-instruct', 'mistral-large-latest'],
+    models: [], // Will be fetched dynamically
     requiresApiKey: true,
     description: 'Mistral AI open-source and commercial models'
   },
   openrouter: {
     name: 'OpenRouter',
     baseUrl: 'https://openrouter.ai/api/v1',
-    models: ['openai/gpt-4', 'anthropic/claude-3-opus', 'google/gemini-pro', 'mistralai/mixtral-8x7b-instruct'],
+    models: [], // Will be fetched dynamically
     requiresApiKey: true,
     description: 'Access to multiple AI models through OpenRouter'
   },
@@ -263,6 +264,132 @@ class AIService {
 
   getProviderModels(provider: AIProvider): string[] {
     return AI_PROVIDERS[provider]?.models || []
+  }
+
+  /**
+   * Fetch available models from OpenAI API
+   */
+  async fetchOpenAIModels(apiKey: string): Promise<string[]> {
+    try {
+      const response = await fetch('https://api.openai.com/v1/models', {
+        headers: {
+          'Authorization': `Bearer ${apiKey}`,
+          'Content-Type': 'application/json'
+        }
+      });
+
+      if (!response.ok) {
+        throw new Error(`Failed to fetch OpenAI models: ${response.statusText}`);
+      }
+
+      const data = await response.json();
+      // Filter for chat models and sort them
+      return data.data
+        .filter((model: any) => model.id.includes('gpt'))
+        .map((model: any) => model.id)
+        .sort();
+    } catch (error) {
+      console.error('Error fetching OpenAI models:', error);
+      return ['gpt-4', 'gpt-4-turbo', 'gpt-3.5-turbo']; // Fallback models
+    }
+  }
+
+  /**
+   * Fetch available models from Google Gemini API
+   */
+  async fetchGoogleModels(apiKey: string): Promise<string[]> {
+    try {
+      const response = await fetch(
+        `https://generativelanguage.googleapis.com/v1beta/models?key=${apiKey}`
+      );
+
+      if (!response.ok) {
+        throw new Error(`Failed to fetch Google models: ${response.statusText}`);
+      }
+
+      const data = await response.json();
+      // Filter for gemini models and sort them
+      return data.models
+        .filter((model: any) => model.name.includes('gemini'))
+        .map((model: any) => model.name.replace('models/', ''))
+        .sort();
+    } catch (error) {
+      console.error('Error fetching Google models:', error);
+      return ['gemini-1.5-pro', 'gemini-2.0-flash-exp', 'gemini-2.5-pro-preview']; // Fallback models
+    }
+  }
+
+  /**
+   * Fetch available models from Mistral AI API
+   */
+  async fetchMistralModels(apiKey: string): Promise<string[]> {
+    try {
+      const response = await fetch('https://api.mistral.ai/v1/models', {
+        headers: {
+          'Authorization': `Bearer ${apiKey}`,
+          'Content-Type': 'application/json'
+        }
+      });
+
+      if (!response.ok) {
+        throw new Error(`Failed to fetch Mistral models: ${response.statusText}`);
+      }
+
+      const data = await response.json();
+      return data.data
+        .map((model: any) => model.id)
+        .sort();
+    } catch (error) {
+      console.error('Error fetching Mistral models:', error);
+      return ['mistral-7b-instruct', 'mixtral-8x7b-instruct', 'mistral-large-latest']; // Fallback models
+    }
+  }
+
+  /**
+   * Fetch available models from OpenRouter API
+   */
+  async fetchOpenRouterModels(apiKey: string): Promise<string[]> {
+    try {
+      const response = await fetch('https://openrouter.ai/api/v1/models', {
+        headers: {
+          'Authorization': `Bearer ${apiKey}`,
+          'Content-Type': 'application/json'
+        }
+      });
+
+      if (!response.ok) {
+        throw new Error(`Failed to fetch OpenRouter models: ${response.statusText}`);
+      }
+
+      const data = await response.json();
+      return data.data
+        .map((model: any) => model.id)
+        .sort();
+    } catch (error) {
+      console.error('Error fetching OpenRouter models:', error);
+      return ['openai/gpt-4', 'anthropic/claude-3-opus', 'google/gemini-pro', 'mistralai/mixtral-8x7b-instruct']; // Fallback models
+    }
+  }
+
+  /**
+   * Fetch models for a specific provider
+   */
+  async fetchModelsForProvider(provider: AIProvider, apiKey: string): Promise<string[]> {
+    switch (provider) {
+      case 'openai':
+        return this.fetchOpenAIModels(apiKey);
+      case 'google':
+        return this.fetchGoogleModels(apiKey);
+      case 'mistral':
+        return this.fetchMistralModels(apiKey);
+      case 'openrouter':
+        return this.fetchOpenRouterModels(apiKey);
+      case 'custom':
+        // For custom providers, we don't fetch models automatically
+        return ['custom-model'];
+      default:
+        return [];
+    }
   }
 }
 
