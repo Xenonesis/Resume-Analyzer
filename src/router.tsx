@@ -7,6 +7,7 @@ import { UploadPage } from '@/pages/UploadPage'
 import { AnalyzePage } from '@/pages/AnalyzePage'
 import { ResultsPage } from '@/pages/ResultsPage'
 import { ThemePage } from '@/pages/ThemePage'
+import DashboardPage from '@/pages/DashboardPage'
 import { Layout } from '@/components/layout/Layout'
 import AISettings from '@/components/AISettings'
 import HeroDemo from '@/components/HeroDemo'
@@ -27,6 +28,10 @@ export const router = createBrowserRouter([
       {
         index: true,
         element: <HomePage />
+      },
+      {
+        path: 'dashboard',
+        element: <DashboardPage />
       },
       {
         path: 'upload',

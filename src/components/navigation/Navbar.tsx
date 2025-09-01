@@ -3,12 +3,13 @@ import { useNavigate, useLocation } from 'react-router'
 import { useAuth, useAuthActions } from '@/stores/useAppStore'
 import puterService from '@/services/puterService'
 import { CompactThemeSelector } from '@/components/ThemeSelector'
-import { Menu, X, Home, Upload, Settings, Palette, LogOut, User } from 'lucide-react'
+import { Menu, X, Home, Upload, Settings, Palette, LogOut, User, BarChart3 } from 'lucide-react'
+import { NotificationCenter } from '@/components/dashboard/NotificationCenter'
 
 export const Navbar: React.FC = () => {
   const navigate = useNavigate()
   const location = useLocation()
-  const { isAuthenticated, user } = useAuth()
+  const { user } = useAuth()
   const { setAuthenticated, setUser } = useAuthActions()
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
@@ -34,7 +35,8 @@ export const Navbar: React.FC = () => {
   }
 
   const navigationItems = [
-    { name: 'Dashboard', path: '/', icon: Home },
+    { name: 'Home', path: '/', icon: Home },
+    { name: 'Dashboard', path: '/dashboard', icon: BarChart3 },
     { name: 'Upload Resume', path: '/upload', icon: Upload },
     { name: 'AI Settings', path: '/settings', icon: Settings },
     { name: 'Themes', path: '/themes', icon: Palette },
@@ -99,6 +101,9 @@ export const Navbar: React.FC = () => {
 
             {/* User Menu and Mobile Menu Button */}
             <div className="flex items-center space-x-4">
+              {/* Notification Center */}
+              <NotificationCenter />
+              
               {/* Mobile menu button */}
               <button
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
