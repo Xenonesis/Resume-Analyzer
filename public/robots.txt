@@ -14,4 +14,4 @@ Disallow: /analyze/
 Allow: /
 
 # Reference to our sitemap for better indexing
-Sitemap: https://yourdomain.com/sitemap.xml
+Sitemap: https://resumeanalyzer-phi.vercel.app/sitemap.xml

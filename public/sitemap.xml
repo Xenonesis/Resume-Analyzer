@@ -1,55 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://ai-resume-analyzer.com/</loc>
+    <loc>https://resumeanalyzer-phi.vercel.app/</loc>
     <lastmod>2025-09-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://ai-resume-analyzer.com/dashboard</loc>
+    <loc>https://resumeanalyzer-phi.vercel.app/dashboard</loc>
     <lastmod>2025-09-01</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://ai-resume-analyzer.com/upload</loc>
+    <loc>https://resumeanalyzer-phi.vercel.app/upload</loc>
     <lastmod>2025-09-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://ai-resume-analyzer.com/analyze/example-file-path</loc>
+    <loc>https://resumeanalyzer-phi.vercel.app/analyze/example-file-path</loc>
     <lastmod>2025-09-01</lastmod>
     <changefreq>never</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://ai-resume-analyzer.com/results/example-resume-id</loc>
+    <loc>https://resumeanalyzer-phi.vercel.app/results/example-resume-id</loc>
     <lastmod>2025-09-01</lastmod>
     <changefreq>never</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://ai-resume-analyzer.com/settings</loc>
+    <loc>https://resumeanalyzer-phi.vercel.app/settings</loc>
     <lastmod>2025-09-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://ai-resume-analyzer.com/hero-demo</loc>
+    <loc>https://resumeanalyzer-phi.vercel.app/hero-demo</loc>
     <lastmod>2025-09-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://ai-resume-analyzer.com/themes</loc>
+    <loc>https://resumeanalyzer-phi.vercel.app/themes</loc>
     <lastmod>2025-09-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://ai-resume-analyzer.com/auth</loc>
+    <loc>https://resumeanalyzer-phi.vercel.app/auth</loc>
     <lastmod>2025-09-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>

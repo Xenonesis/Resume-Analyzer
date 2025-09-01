@@ -294,7 +294,7 @@ git push origin feature/amazing-feature
 
 Need help? We're here for you:
 
-- 📧 **Email**: support@ai-resume-analyzer.com
+- 📧 **Email**: itisaddy7@gmail.com
 - 💬 **Discord**: [Join our community](#)
 - 📖 **Documentation**: [Full docs](#)
 - 🐛 **Issues**: [GitHub Issues](#)
