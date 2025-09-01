@@ -40,6 +40,12 @@ self.addEventListener('fetch', (event) => {
             return response
           }
 
+          // Only cache http/https requests, not chrome-extension or other schemes
+          const url = new URL(event.request.url)
+          if (url.protocol !== 'http:' && url.protocol !== 'https:') {
+            return response
+          }
+
           // Clone the response
           const responseToCache = response.clone()
 

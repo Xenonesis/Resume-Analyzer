@@ -1,6 +1,6 @@
 {
   "name": "ai-resume-analyzer",
-  "version": "v0.45",
+  "version": "v0.50",
   "type": "module",
   "scripts": {
     "dev": "vite",

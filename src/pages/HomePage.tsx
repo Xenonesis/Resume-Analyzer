@@ -16,15 +16,78 @@ export default function HomePage() {
   const { items: resumes } = useResumes()
   const currentTheme = useTheme()
   const theme = getTheme(currentTheme)
+  
+    // SVG Logo Components - Updated with better designs
+  // SVG Logo Components - Updated with authentic brand designs
+  const GoogleLogo = () => (
+    <svg viewBox="0 0 150 60" className="h-12 w-auto" aria-hidden="true">
+      <g>
+        <path d="M75 20c0-5.5-4.5-10-10-10s-10 4.5-10 10v20c0 5.5 4.5 10 10 10s10-4.5 10-10V20z" fill="#4285F4"/>
+        <path d="M55 30c0-5.5-4.5-10-10-10s-10 4.5-10 10v10c0 5.5 4.5 10 10 10s10-4.5 10-10V30z" fill="#EA4335"/>
+        <path d="M95 30c0-5.5 4.5-10 10-10s10 4.5 10 10v10c0 5.5-4.5 10-10 10s-10-4.5-10-10V30z" fill="#FBBC04"/>
+        <path d="M75 40c0 5.5 4.5 10 10 10s10-4.5 10-10V30c0-5.5-4.5-10-10-10s-10 4.5-10 10v10z" fill="#34A853"/>
+        <text x="115" y="35" fontFamily="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" fontSize="18" fill="#5F6368" fontWeight="500">Google</text>
+      </g>
+    </svg>
+  );
+  
+  const MicrosoftLogo = () => (
+    <svg viewBox="0 0 150 60" className="h-12 w-auto" aria-hidden="true">
+      <g>
+        <rect x="8" y="8" width="18" height="18" fill="#F25022"/>
+        <rect x="32" y="8" width="18" height="18" fill="#7FBA00"/>
+        <rect x="8" y="32" width="18" height="18" fill="#00A4EF"/>
+        <rect x="32" y="32" width="18" height="18" fill="#FFB900"/>
+        <text x="65" y="35" fontFamily="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" fontSize="18" fill="#5F6368" fontWeight="500">Microsoft</text>
+      </g>
+    </svg>
+  );
+  
+  const AppleLogo = () => (
+    <svg viewBox="0 0 150 60" className="h-12 w-auto" aria-hidden="true">
+      <g>
+        <path d="M35.2 12.9c-1.3 1.5-3.4 2.7-5.4 2.4-.3-2.1.6-4.3 1.8-5.7 1.3-1.5 3.5-2.6 5.3-2.7.2 2.2-.6 4.4-1.7 6zm1.8 3c-2.9-.2-5.4 1.6-6.8 1.6-1.4 0-3.5-1.5-5.8-1.5-3 .1-5.7 1.7-7.2 4.4-3.1 5.4-.8 13.4 2.2 17.8 1.5 2.1 3.2 4.5 5.5 4.4 2.2-.1 3.1-1.4 5.8-1.4s3.5 1.4 5.8 1.3c2.4-.1 3.8-2.1 5.3-4.3 1.7-2.4 2.4-4.8 2.4-4.9-.1 0-4.6-1.8-4.6-7.1-.1-4.4 3.6-6.5 3.7-6.6-2-3-5.2-3.4-6.3-3.7z" fill="#555555"/>
+        <text x="70" y="35" fontFamily="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" fontSize="18" fill="#5F6368" fontWeight="500">Apple</text>
+      </g>
+    </svg>
+  );
+  
+  const AmazonLogo = () => (
+    <svg viewBox="0 0 150 60" className="h-12 w-auto" aria-hidden="true">
+      <g>
+        <text x="10" y="25" fontFamily="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" fontSize="20" fill="#232F3E" fontWeight="400">Amazon</text>
+        <path d="M15 35c12 6 28 6 40 0" stroke="#FF9900" strokeWidth="2" fill="none" strokeLinecap="round"/>
+        <circle cx="52" cy="32" r="1.5" fill="#FF9900"/>
+      </g>
+    </svg>
+  );
+  
+  const MetaLogo = () => (
+    <svg viewBox="0 0 150 60" className="h-12 w-auto" aria-hidden="true">
+      <g>
+        <path d="M15 20c-5 0-10 5-10 10s5 10 10 10c3 0 6-1.5 8-4 2 2.5 5 4 8 4s6-1.5 8-4c2 2.5 5 4 8 4 5 0 10-5 10-10s-5-10-10-10c-3 0-6 1.5-8 4-2-2.5-5-4-8-4s-6 1.5-8 4c-2-2.5-5-4-8-4z" fill="#0081FB"/>
+        <text x="75" y="35" fontFamily="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" fontSize="18" fill="#0081FB" fontWeight="600">Meta</text>
+      </g>
+    </svg>
+  );
+  
+  const NetflixLogo = () => (
+    <svg viewBox="0 0 150 60" className="h-12 w-auto" aria-hidden="true">
+      <g>
+        <path d="M8 10 L32 10 L32 50 L8 50 L8 10 Z M32 10 L40 10 L40 42 L32 42 L32 10 Z M40 10 L48 10 L48 50 L40 50 L40 10 Z M48 10 L56 10 L56 38 L48 38 L48 10 Z M56 10 L64 10 L64 50 L56 50 L56 10 Z" fill="#E50914"/>
+        <text x="75" y="38" fontFamily="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" fontSize="20" fill="#E50914" fontWeight="700">NETFLIX</text>
+      </g>
+    </svg>
+  );
 
   const handleAnalyzeClick = () => {
     navigate("/upload")
   }
-
+  
   const handleResumeClick = (resumeId: string) => {
     navigate(`/results/${resumeId}`)
   }
-
+  
   if (resumes.length === 0) {
     return (
       <div className="min-h-screen">
@@ -117,10 +180,19 @@ export default function HomePage() {
           <div className="max-w-7xl mx-auto px-6 text-center">
             <h2 id="social-proof-heading" className="sr-only">Trusted by Leading Companies</h2>
             <p className="text-gray-600 mb-8 text-lg">Trusted by professionals at leading companies</p>
-            <div className="flex flex-wrap justify-center items-center gap-8 opacity-60" role="list" aria-label="Partner companies">
-              {['Google', 'Microsoft', 'Apple', 'Amazon', 'Meta', 'Netflix'].map((company) => (
-                <div key={company} className="text-2xl font-bold text-gray-400 hover:text-gray-600 transition-colors duration-300" role="listitem" aria-label={`Trusted by ${company} professionals`}>
-                  {company}
+            <div className="flex flex-wrap justify-center items-center gap-8 opacity-90" role="list" aria-label="Partner companies">
+              {[
+                { name: 'Google', component: <GoogleLogo /> },
+                { name: 'Microsoft', component: <MicrosoftLogo /> },
+                { name: 'Apple', component: <AppleLogo /> },
+                { name: 'Amazon', component: <AmazonLogo /> },
+                { name: 'Meta', component: <MetaLogo /> },
+                { name: 'Netflix', component: <NetflixLogo /> }
+              ].map((company) => (
+                <div key={company.name} className="flex items-center justify-center" role="listitem" aria-label={`Trusted by ${company.name} professionals`}>
+                  <div className="h-12 w-auto opacity-70 hover:opacity-100 transition-opacity duration-300">
+                    {company.component}
+                  </div>
                 </div>
               ))}
             </div>
@@ -263,7 +335,7 @@ export default function HomePage() {
       </div>
     )
   }
-
+  
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-gray-50">
       <Helmet>
