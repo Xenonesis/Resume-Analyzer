@@ -10,7 +10,7 @@
 
 *Get instant feedback, boost ATS compatibility, and land your dream job faster*
 
-[🎯 Live Demo](#) • [📖 Documentation](#features) • [🛠️ Installation](#installation) • [🤝 Contributing](#contributing)
+[🎯 Live Demo](https://resumeanalyzer-phi.vercel.app) • [📖 Documentation](#features) • [🛠️ Installation](#installation) • [🤝 Contributing](#contributing)
 
 </div>
 
