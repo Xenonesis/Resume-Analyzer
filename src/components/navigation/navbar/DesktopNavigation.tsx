@@ -1,5 +1,5 @@
 import React from 'react'
-import { useNavigate, useLocation } from 'react-router'
+import { useLocation } from 'react-router'
 import { BarChart3, Upload, Settings, Palette } from 'lucide-react'
 import { CompactThemeSelector } from '@/components/ThemeSelector'
 

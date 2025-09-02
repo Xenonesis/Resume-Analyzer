@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useNavigate, useLocation } from 'react-router'
+import { useNavigate } from 'react-router'
 import { useAuth, useAIConfig } from '@/stores/useAppStore'
 import { useSupabaseAuth } from '@/hooks/useSupabaseAuth'
 import { NotificationCenter } from '@/components/dashboard/NotificationCenter'
@@ -11,7 +11,6 @@ import { UserMenu } from './navbar/UserMenu'
 
 export const Navbar: React.FC = () => {
   const navigate = useNavigate()
-  const location = useLocation()
   const { user, isAuthenticated } = useAuth()
   const { config, isConfigured } = useAIConfig()
 
