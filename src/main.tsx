@@ -5,6 +5,7 @@ import { router } from './router'
 import App from './App'
 import './index.css'
 import { HelmetProvider } from 'react-helmet-async'
+import { ThemeProvider } from './components/ThemeProvider'
 
 // Register Service Worker for PWA
 if ('serviceWorker' in navigator) {
@@ -42,9 +43,11 @@ if ('Notification' in window && 'serviceWorker' in navigator) {
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <HelmetProvider>
-      <App>
-        <RouterProvider router={router} />
-      </App>
+      <ThemeProvider>
+        <App>
+          <RouterProvider router={router} />
+        </App>
+      </ThemeProvider>
     </HelmetProvider>
   </React.StrictMode>,
 )

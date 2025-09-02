@@ -15,7 +15,7 @@ export const UploadPage: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-gray-50 relative">
+    <div className="min-h-screen bg-gradient-to-br from-primary-50 via-white to-secondary-50 relative">
       <Helmet>
         <title>Upload Your Resume - AI Resume Analyzer</title>
         <meta name="description" content="Upload your resume for comprehensive AI analysis. Get detailed feedback, ATS compatibility scores, and actionable recommendations to boost your career prospects." />
@@ -35,10 +35,10 @@ export const UploadPage: React.FC = () => {
         <nav className="px-6 py-6">
           <button
             onClick={() => navigate('/app')}
-            className="group inline-flex items-center text-slate-600 hover:text-slate-900 font-medium transition-all duration-300"
+            className="group inline-flex items-center text-secondary-600 hover:text-secondary-900 font-medium transition-all duration-300"
             aria-label="Navigate back to dashboard homepage"
           >
-            <div className="w-8 h-8 rounded-full bg-slate-100 group-hover:bg-slate-200 flex items-center justify-center mr-3 transition-colors duration-300" aria-hidden="true">
+            <div className="w-8 h-8 rounded-full bg-secondary-100 group-hover:bg-secondary-200 flex items-center justify-center mr-3 transition-colors duration-300" aria-hidden="true">
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
               </svg>
@@ -63,23 +63,23 @@ export const UploadPage: React.FC = () => {
             {/* Process Steps */}
             <div className="flex items-center justify-center space-x-6 mb-12">
               <div className="flex items-center space-x-3">
-                <div className="w-8 h-8 rounded-full bg-blue-600 text-white flex items-center justify-center text-sm font-medium">1</div>
-                <span className="text-sm font-medium text-slate-700">Upload</span>
+                <div className="w-8 h-8 rounded-full bg-primary-600 text-white flex items-center justify-center text-sm font-medium">1</div>
+                <span className="text-sm font-medium text-secondary-700">Upload</span>
               </div>
-              <div className="w-12 h-px bg-slate-200"></div>
+              <div className="w-12 h-px bg-secondary-200"></div>
               <div className="flex items-center space-x-3">
-                <div className="w-8 h-8 rounded-full bg-slate-200 text-slate-500 flex items-center justify-center text-sm font-medium">2</div>
-                <span className="text-sm text-slate-500">Questionnaire</span>
+                <div className="w-8 h-8 rounded-full bg-secondary-200 text-secondary-500 flex items-center justify-center text-sm font-medium">2</div>
+                <span className="text-sm text-secondary-500">Questionnaire</span>
               </div>
-              <div className="w-12 h-px bg-slate-200"></div>
+              <div className="w-12 h-px bg-secondary-200"></div>
               <div className="flex items-center space-x-3">
-                <div className="w-8 h-8 rounded-full bg-slate-200 text-slate-500 flex items-center justify-center text-sm font-medium">3</div>
-                <span className="text-sm text-slate-500">Analyze</span>
+                <div className="w-8 h-8 rounded-full bg-secondary-200 text-secondary-500 flex items-center justify-center text-sm font-medium">3</div>
+                <span className="text-sm text-secondary-500">Analyze</span>
               </div>
-              <div className="w-12 h-px bg-slate-200"></div>
+              <div className="w-12 h-px bg-secondary-200"></div>
               <div className="flex items-center space-x-3">
-                <div className="w-8 h-8 rounded-full bg-slate-200 text-slate-500 flex items-center justify-center text-sm font-medium">4</div>
-                <span className="text-sm text-slate-500">Improve</span>
+                <div className="w-8 h-8 rounded-full bg-secondary-200 text-secondary-500 flex items-center justify-center text-sm font-medium">4</div>
+                <span className="text-sm text-secondary-500">Improve</span>
               </div>
             </div>
           </div>

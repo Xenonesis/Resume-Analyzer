@@ -156,7 +156,7 @@ export const AISettings: React.FC<AISettingsProps> = ({ onClose }) => {
         {/* Header */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
           <div>
-            <h1 className="text-3xl font-bold text-slate-900 flex items-center gap-3">
+            <h1 className="text-3xl font-bold text-secondary-900 flex items-center gap-3">
               <div className="p-2 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg">
                 <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
@@ -165,14 +165,14 @@ export const AISettings: React.FC<AISettingsProps> = ({ onClose }) => {
               </div>
               AI Configuration
             </h1>
-            <p className="text-slate-600 mt-2">Configure your AI provider for intelligent resume analysis</p>
+            <p className="text-secondary-600 mt-2">Configure your AI provider for intelligent resume analysis</p>
           </div>
           {onClose && (
             <button
               onClick={onClose}
-              className="p-3 rounded-xl hover:bg-slate-200 transition-colors shadow-sm border border-slate-200"
+              className="p-3 rounded-xl hover:bg-secondary-200 transition-colors shadow-sm border border-secondary-200"
             >
-              <svg className="w-6 h-6 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-6 h-6 text-secondary-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
               </svg>
             </button>
@@ -195,7 +195,7 @@ export const AISettings: React.FC<AISettingsProps> = ({ onClose }) => {
                 </svg>
               )}
             </div>
-            <span className="font-medium text-slate-800 text-lg">
+            <span className="font-medium text-secondary-800 text-lg">
               {isConfigured ? 'AI service configured and ready' : 'Configuration required'}
             </span>
           </div>
@@ -230,10 +230,10 @@ export const AISettings: React.FC<AISettingsProps> = ({ onClose }) => {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                 </svg>
               </div>
-              <h2 className="text-2xl font-bold text-slate-900 mb-4">
+              <h2 className="text-2xl font-bold text-secondary-900 mb-4">
                 🚀 Get Started with Real AI Analysis
               </h2>
-              <p className="text-slate-600 max-w-2xl mx-auto">
+              <p className="text-secondary-600 max-w-2xl mx-auto">
                 This application provides only authentic AI-powered resume analysis. 
                 Follow these simple steps to configure your AI service and get real, valuable insights.
               </p>
@@ -243,12 +243,12 @@ export const AISettings: React.FC<AISettingsProps> = ({ onClose }) => {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
               <div className="text-center group">
                 <div className="w-16 h-16 bg-gradient-to-r from-blue-100 to-blue-200 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
-                  <svg className="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-8 h-8 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
                   </svg>
                 </div>
-                <h3 className="text-lg font-semibold text-slate-900 mb-2">Step 1: Get API Key</h3>
-                <p className="text-slate-600 text-sm">
+                <h3 className="text-lg font-semibold text-secondary-900 mb-2">Step 1: Get API Key</h3>
+                <p className="text-secondary-600 text-sm">
                   Choose an AI provider below and create an API key. We recommend OpenAI for best results.
                 </p>
               </div>
@@ -260,8 +260,8 @@ export const AISettings: React.FC<AISettingsProps> = ({ onClose }) => {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                   </svg>
                 </div>
-                <h3 className="text-lg font-semibold text-slate-900 mb-2">Step 2: Configure</h3>
-                <p className="text-slate-600 text-sm">
+                <h3 className="text-lg font-semibold text-secondary-900 mb-2">Step 2: Configure</h3>
+                <p className="text-secondary-600 text-sm">
                   Enter your API key in the form below. Test the connection to ensure it works properly.
                 </p>
               </div>
@@ -272,17 +272,17 @@ export const AISettings: React.FC<AISettingsProps> = ({ onClose }) => {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
                 </div>
-                <h3 className="text-lg font-semibold text-slate-900 mb-2">Step 3: Analyze</h3>
-                <p className="text-slate-600 text-sm">
+                <h3 className="text-lg font-semibold text-secondary-900 mb-2">Step 3: Analyze</h3>
+                <p className="text-secondary-600 text-sm">
                   Upload your resume and get authentic AI analysis with real scores and actionable feedback.
                 </p>
               </div>
             </div>
 
             {/* Provider Comparison */}
-            <div className="bg-gradient-to-r from-slate-50 to-slate-100 rounded-2xl p-6 mb-6 border border-slate-200">
-              <h3 className="text-xl font-semibold text-slate-900 mb-5 flex items-center">
-                <svg className="w-5 h-5 mr-2 text-slate-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="bg-gradient-to-r from-secondary-50 to-secondary-100 rounded-2xl p-6 mb-6 border border-secondary-200">
+              <h3 className="text-xl font-semibold text-secondary-900 mb-5 flex items-center">
+                <svg className="w-5 h-5 mr-2 text-secondary-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
                 </svg>
                 Choose Your AI Provider
@@ -299,15 +299,15 @@ export const AISettings: React.FC<AISettingsProps> = ({ onClose }) => {
                     onClick={() => handleProviderChange(key as AIProvider)}
                   >
                     <div className="flex items-center justify-between mb-3">
-                      <h4 className="font-semibold text-slate-900">{provider.name}</h4>
+                      <h4 className="font-semibold text-secondary-900">{provider.name}</h4>
                       {key === 'openai' && (
                         <span className="text-xs bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-2 py-1 rounded-full">
                           Recommended
                         </span>
                       )}
                     </div>
-                    <p className="text-sm text-slate-600 mb-3">{provider.description}</p>
-                    <div className="flex items-center text-xs text-slate-500">
+                    <p className="text-sm text-secondary-600 mb-3">{provider.description}</p>
+                    <div className="flex items-center text-xs text-secondary-500">
                       <svg className="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                       </svg>
@@ -382,7 +382,7 @@ export const AISettings: React.FC<AISettingsProps> = ({ onClose }) => {
                         : 'border-slate-200 hover:border-slate-300 bg-white'
                     }`}
                   >
-                    <div className="font-medium text-slate-900 flex items-center">
+                    <div className="font-medium text-secondary-900 flex items-center">
                       {provider.name}
                       {key === 'openai' && (
                         <span className="ml-2 text-xs bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-2 py-0.5 rounded-full">
@@ -390,7 +390,7 @@ export const AISettings: React.FC<AISettingsProps> = ({ onClose }) => {
                         </span>
                       )}
                     </div>
-                    <div className="text-sm text-slate-600 mt-2">{provider.description}</div>
+                    <div className="text-sm text-secondary-600 mt-2">{provider.description}</div>
                   </button>
                 ))}
               </div>

@@ -1,8 +1,7 @@
 import { useEffect } from 'react'
-import { useAIConfig, useAIConfigActions, useTheme } from '@/stores/useAppStore'
+import { useAIConfig, useAIConfigActions } from '@/stores/useAppStore'
 import { useSupabaseAuth } from '@/hooks/useSupabaseAuth'
 import { aiService } from '@/services/aiService'
-import { getTheme, applyThemeToDocument } from '@/utils/themes'
 
 interface AppProps {
   children?: React.ReactNode
@@ -11,7 +10,6 @@ interface AppProps {
 function App({ children }: AppProps) {
   const { config } = useAIConfig()
   const { setAIConfigured } = useAIConfigActions()
-  const currentTheme = useTheme()
 
   // Initialize Supabase authentication
   useSupabaseAuth()
@@ -25,12 +23,6 @@ function App({ children }: AppProps) {
     
     // Application initialized
   }, [config, setAIConfigured])
-
-  // Apply theme on mount and when theme changes
-  useEffect(() => {
-    const theme = getTheme(currentTheme)
-    applyThemeToDocument(theme)
-  }, [currentTheme])
 
   return <>{children}</>
 }

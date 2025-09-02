@@ -230,7 +230,7 @@ const DashboardPage: React.FC = () => {
     if (filteredResumes.length === 0) return []
 
     const categories = [
-      { key: 'ATS', label: 'ATS Compatibility', color: 'bg-blue-500' },
+      { key: 'ATS', label: 'ATS Compatibility', color: 'bg-primary-500' },
       { key: 'content', label: 'Content Quality', color: 'bg-green-500' },
       { key: 'structure', label: 'Structure', color: 'bg-purple-500' },
       { key: 'skills', label: 'Skills', color: 'bg-orange-500' },
@@ -301,7 +301,7 @@ const DashboardPage: React.FC = () => {
   }, [filteredResumes])
 
   return (
-    <div className="min-h-screen bg-gray-50 p-6">
+    <div className="min-h-screen bg-primary-50 p-6">
       <Helmet>
         <title>Resume Analytics Dashboard - AI Resume Analyzer</title>
         <meta name="description" content="Monitor and analyze your resume performance metrics. Track improvements over time and identify areas for enhancement." />
@@ -316,8 +316,8 @@ const DashboardPage: React.FC = () => {
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Resume Analytics Dashboard</h1>
-          <p className="text-gray-600">Monitor and analyze resume performance metrics</p>
+          <h1 className="text-3xl font-bold text-secondary-900 mb-2">Resume Analytics Dashboard</h1>
+          <p className="text-secondary-600">Monitor and analyze resume performance metrics</p>
         </div>
 
         {/* Filters */}
@@ -335,7 +335,7 @@ const DashboardPage: React.FC = () => {
             title="Total Resumes"
             value={dashboardStats.totalResumes}
             icon={FileText}
-            iconColor="text-blue-500"
+            iconColor="text-primary-500"
           />
           
           <MetricCard
@@ -382,7 +382,7 @@ const DashboardPage: React.FC = () => {
           <ProgressChart
             title="Score Distribution"
             data={scoreDistribution.map((dist, index) => {
-              const colors = ['bg-red-500', 'bg-orange-500', 'bg-yellow-500', 'bg-green-500', 'bg-blue-500']
+              const colors = ['bg-error-500', 'bg-warning-500', 'bg-warning-400', 'bg-success-500', 'bg-primary-500']
               return {
                 label: `${dist.range} points`,
                 value: dist.count,
@@ -412,7 +412,7 @@ const DashboardPage: React.FC = () => {
 
         {/* Recent Resumes Table */}
         <div className="bg-white rounded-lg shadow-md p-6">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">Recent Analyses</h3>
+          <h3 className="text-lg font-semibold text-secondary-900 mb-4">Recent Analyses</h3>
           {filteredResumes.length > 0 ? (
             <div className="overflow-x-auto">
               <table className="min-w-full divide-y divide-gray-200">
@@ -446,11 +446,11 @@ const DashboardPage: React.FC = () => {
                     }).reduce((a, b) => a[1] > b[1] ? a : b)[0]
 
                     return (
-                      <tr key={resume.id} className="hover:bg-gray-50">
-                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                      <tr key={resume.id} className="hover:bg-primary-50">
+                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-secondary-900">
                           {resume.companyName || 'N/A'}
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-secondary-500">
                           {resume.jobTitle || 'N/A'}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
@@ -462,10 +462,10 @@ const DashboardPage: React.FC = () => {
                             {getFeedbackScore(resume).toFixed(1)}
                           </span>
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-secondary-500">
                           {new Date(resume.createdAt).toLocaleDateString()}
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-secondary-500">
                           {topCategory}
                         </td>
                       </tr>
@@ -476,8 +476,8 @@ const DashboardPage: React.FC = () => {
             </div>
           ) : (
             <div className="text-center py-8">
-              <FileText className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-              <p className="text-gray-500">No resume analyses yet. Upload and analyze your first resume to see data here.</p>
+              <FileText className="h-12 w-12 text-secondary-400 mx-auto mb-4" />
+              <p className="text-secondary-500">No resume analyses yet. Upload and analyze your first resume to see data here.</p>
             </div>
           )}
         </div>
