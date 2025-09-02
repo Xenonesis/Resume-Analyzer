@@ -1,15 +1,17 @@
 import React from 'react'
 import { useNavigate } from 'react-router'
-import { useResumes } from '@/stores/useAppStore'
+import { useResumes, useAIConfig } from '@/stores/useAppStore'
 import { LoadingSpinner } from '@/components/LoadingSpinner'
 import { useResumeData } from '@/hooks/useResumeData'
 import { useAuth } from '@/stores/useAppStore'
 import { Hero } from '@/components/ui/hero'
 import { getFeedbackScore } from '@/types'
+import { aiService } from '@/services/aiService'
 
 export const HomePageWithHero: React.FC = () => {
   const navigate = useNavigate()
   const { isAuthenticated } = useAuth()
+  const { config, isConfigured } = useAIConfig()
   const { items: resumes, isLoading: resumesLoading } = useResumes()
 
   // Load resume data when authenticated
@@ -24,7 +26,18 @@ export const HomePageWithHero: React.FC = () => {
   }
 
   const handleAnalyzeClick = () => {
-    navigate('/app/upload')
+    // Check if all required configuration is complete
+    const hasValidConfig = isAuthenticated && 
+                          isConfigured && 
+                          aiService.isConfigured() && 
+                          config?.apiKey && 
+                          config.apiKey.length > 0
+
+    if (hasValidConfig) {
+      navigate('/app/upload')
+    } else {
+      navigate('/app/settings')
+    }
   }
 
   if (resumes.length === 0) {
@@ -141,7 +154,7 @@ export const HomePageWithHero: React.FC = () => {
             Track your resume performance, monitor improvements, and optimize for success
           </p>
           <button 
-            onClick={() => navigate('/app/upload')}
+            onClick={handleAnalyzeClick}
             className="group bg-gradient-to-r from-blue-600 via-purple-600 to-blue-700 hover:from-blue-700 hover:via-purple-700 hover:to-blue-800 text-white font-bold py-4 px-8 rounded-2xl text-lg shadow-2xl hover:shadow-3xl transform hover:scale-105 transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-blue-500/50"
           >
             <span className="flex items-center justify-center">

@@ -36,7 +36,7 @@ export const getFileFromSession = (filePath: string): File | null => {
     }
     
     // Convert data URL back to file
-    const [header, base64Data] = fileData.split(',')
+    const [, base64Data] = fileData.split(',')
     if (!base64Data) {
       console.error('No base64 data found in stored file')
       return null

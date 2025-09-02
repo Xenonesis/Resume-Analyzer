@@ -1,6 +1,7 @@
 
 import { createBrowserRouter, Navigate } from 'react-router'
 import { ProtectedRoute } from '@/components/auth/ProtectedRoute'
+import { ConfigurationGuard } from '@/components/auth/ConfigurationGuard'
 import { AuthPage } from '@/components/auth/AuthPage'
 import { AuthCallback } from '@/components/auth/AuthCallback'
 import HomePage from '@/pages/HomePage'
@@ -53,15 +54,27 @@ export const router = createBrowserRouter([
       },
       {
         path: 'upload',
-        element: <UploadPage />
+        element: (
+          <ConfigurationGuard>
+            <UploadPage />
+          </ConfigurationGuard>
+        )
       },
       {
         path: 'questionnaire/:filePath',
-        element: <QuestionnairePage />
+        element: (
+          <ConfigurationGuard>
+            <QuestionnairePage />
+          </ConfigurationGuard>
+        )
       },
       {
         path: 'analyze/:filePath',
-        element: <AnalyzePage />
+        element: (
+          <ConfigurationGuard>
+            <AnalyzePage />
+          </ConfigurationGuard>
+        )
       },
       {
         path: 'results/:resumeId',

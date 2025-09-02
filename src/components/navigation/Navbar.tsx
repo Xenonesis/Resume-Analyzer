@@ -1,21 +1,40 @@
 import React, { useState } from 'react'
 import { useNavigate, useLocation } from 'react-router'
-import { useAuth } from '@/stores/useAppStore'
+import { useAuth, useAIConfig } from '@/stores/useAppStore'
 import { useSupabaseAuth } from '@/hooks/useSupabaseAuth'
 import { CompactThemeSelector } from '@/components/ThemeSelector'
 import { Menu, X, Home, Upload, Settings, Palette, LogOut, User, BarChart3 } from 'lucide-react'
 import { NotificationCenter } from '@/components/dashboard/NotificationCenter'
+import { aiService } from '@/services/aiService'
 
 export const Navbar: React.FC = () => {
   const navigate = useNavigate()
   const location = useLocation()
-  const { user } = useAuth()
+  const { user, isAuthenticated } = useAuth()
+  const { config, isConfigured } = useAIConfig()
 
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [isSigningOut, setIsSigningOut] = useState(false)
 
   const { signOut } = useSupabaseAuth()
+
+  const handleNavigation = (path: string) => {
+    // Check if navigating to upload and if configuration is required
+    if (path === '/app/upload') {
+      const hasValidConfig = isAuthenticated && 
+                            isConfigured && 
+                            aiService.isConfigured() && 
+                            config?.apiKey && 
+                            config.apiKey.length > 0
+
+      if (!hasValidConfig) {
+        navigate('/app/settings')
+        return
+      }
+    }
+    navigate(path)
+  }
 
   const handleSignOut = async () => {
     setIsSigningOut(true)
@@ -100,7 +119,7 @@ export const Navbar: React.FC = () => {
               {navigationItems.map((item) => (
                 <button
                   key={item.path}
-                  onClick={() => navigate(item.path)}
+                  onClick={() => handleNavigation(item.path)}
                   className={`group flex items-center space-x-2 px-4 py-2 rounded-xl text-sm font-semibold transition-all duration-300 ${
                     isActivePath(item.path)
                       ? 'bg-gradient-to-r from-blue-50 to-purple-50 text-blue-700 border border-blue-200/50 shadow-sm'
@@ -200,7 +219,7 @@ export const Navbar: React.FC = () => {
                   <button
                     key={item.path}
                     onClick={() => {
-                      navigate(item.path)
+                      handleNavigation(item.path)
                       setIsMobileMenuOpen(false)
                     }}
                     className={`group flex items-center space-x-3 w-full text-left px-4 py-3 rounded-xl text-sm font-semibold transition-all duration-300 ${

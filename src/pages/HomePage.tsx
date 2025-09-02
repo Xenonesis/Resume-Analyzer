@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router"
-import { useResumes, useTheme } from "../stores/useAppStore"
+import { useResumes, useTheme, useAIConfig, useAuth } from "../stores/useAppStore"
 import { Button } from "../components/ui/button"
 import { getTheme } from "../utils/themes"
 import { Helmet } from "react-helmet-async"
@@ -10,12 +10,15 @@ import {
 import HeroSection from "../components/HeroSection"
 import HowItWorksSection from "../components/HowItWorksSection"
 import CTASection from "../components/CTASection"
+import { aiService } from "../services/aiService"
 
 export default function HomePage() {
   const navigate = useNavigate()
   const { items: resumes } = useResumes()
   const currentTheme = useTheme()
   const theme = getTheme(currentTheme)
+  const { isAuthenticated } = useAuth()
+  const { config, isConfigured } = useAIConfig()
   
     // SVG Logo Components - Updated with better designs
   // SVG Logo Components - Updated with authentic brand designs
@@ -85,7 +88,18 @@ export default function HomePage() {
   );
 
   const handleAnalyzeClick = () => {
-    navigate("/app/upload")
+    // Check if all required configuration is complete
+    const hasValidConfig = isAuthenticated && 
+                          isConfigured && 
+                          aiService.isConfigured() && 
+                          config?.apiKey && 
+                          config.apiKey.length > 0
+
+    if (hasValidConfig) {
+      navigate("/app/upload")
+    } else {
+      navigate("/app/settings")
+    }
   }
   
   const handleResumeClick = (resumeId: string) => {

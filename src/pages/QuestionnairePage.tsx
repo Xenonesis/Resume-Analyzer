@@ -2,12 +2,16 @@ import React from 'react'
 import { useNavigate, useParams, useSearchParams } from 'react-router'
 import { ResumeQuestionnaire, QuestionnaireData } from '@/components/ResumeQuestionnaire'
 import { Helmet } from 'react-helmet-async'
+import { useAIConfig, useAuth } from '@/stores/useAppStore'
+import { aiService } from '@/services/aiService'
 
 export const QuestionnairePage: React.FC = () => {
   const navigate = useNavigate()
   const { filePath } = useParams<{ filePath: string }>()
   const [searchParams] = useSearchParams()
   const fileName = searchParams.get('fileName') || 'resume.pdf'
+  const { isAuthenticated } = useAuth()
+  const { config, isConfigured } = useAIConfig()
 
   const handleQuestionnaireComplete = (data: QuestionnaireData) => {
     // Store questionnaire data in sessionStorage for the analysis page
@@ -20,11 +24,33 @@ export const QuestionnairePage: React.FC = () => {
   }
 
   const handleBack = () => {
-    navigate('/app/upload')
+    // Check if all required configuration is complete
+    const hasValidConfig = isAuthenticated && 
+                          isConfigured && 
+                          aiService.isConfigured() && 
+                          config?.apiKey && 
+                          config.apiKey.length > 0
+
+    if (hasValidConfig) {
+      navigate('/app/upload')
+    } else {
+      navigate('/app/settings')
+    }
   }
 
   if (!filePath) {
-    navigate('/app/upload')
+    // Check if all required configuration is complete
+    const hasValidConfig = isAuthenticated && 
+                          isConfigured && 
+                          aiService.isConfigured() && 
+                          config?.apiKey && 
+                          config.apiKey.length > 0
+
+    if (hasValidConfig) {
+      navigate('/app/upload')
+    } else {
+      navigate('/app/settings')
+    }
     return null
   }
 

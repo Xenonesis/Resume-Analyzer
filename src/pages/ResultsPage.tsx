@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router'
-import { useResumes } from '@/stores/useAppStore'
+import { useResumes, useAIConfig, useAuth } from '@/stores/useAppStore'
+import { aiService } from '@/services/aiService'
 import { ResumeResults } from '@/components/ResumeResults'
 import { ModernSpinner } from '@/components/ui/modern-spinner'
 import { Helmet } from 'react-helmet-async'
@@ -30,6 +31,8 @@ export const ResultsPage: React.FC = () => {
   const navigate = useNavigate()
   const { resumeId } = useParams<{ resumeId: string }>()
   const { items: resumes, isLoading } = useResumes()
+  const { isAuthenticated } = useAuth()
+  const { config, isConfigured } = useAIConfig()
   const [isBookmarked, setIsBookmarked] = useState(false)
   const [showShareModal, setShowShareModal] = useState(false)
   const [analysisTime, setAnalysisTime] = useState<string>('')
@@ -55,6 +58,21 @@ export const ResultsPage: React.FC = () => {
       }
     }
   }, [resume])
+
+  const handleAnalyzeNewResume = () => {
+    // Check if all required configuration is complete
+    const hasValidConfig = isAuthenticated && 
+                          isConfigured && 
+                          aiService.isConfigured() && 
+                          config?.apiKey && 
+                          config.apiKey.length > 0
+
+    if (hasValidConfig) {
+      navigate('/app/upload')
+    } else {
+      navigate('/app/settings')
+    }
+  }
 
   const getScoreColor = (score: number) => {
     if (score >= 90) return 'text-emerald-600 bg-emerald-50 border-emerald-200'
@@ -145,7 +163,7 @@ export const ResultsPage: React.FC = () => {
               Back to Dashboard
             </Button>
             <Button 
-              onClick={() => navigate('/app/upload')}
+              onClick={handleAnalyzeNewResume}
               variant="outline"
               size="lg"
               className="w-full group"
@@ -381,7 +399,7 @@ export const ResultsPage: React.FC = () => {
                 </div>
                 
                 <Button
-                  onClick={() => navigate('/app/upload')}
+                  onClick={handleAnalyzeNewResume}
                   variant="outline"
                   size="sm"
                   className="group"
