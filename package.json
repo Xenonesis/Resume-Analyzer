@@ -1,13 +1,11 @@
 {
   "name": "ai-resume-analyzer",
-  "version": "v0.50",
+  "version": "v0.60",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "test": "vitest",
-    "test:ui": "vitest --ui",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "lint:fix": "eslint . --ext ts,tsx --fix",
     "type-check": "tsc --noEmit"
@@ -15,13 +13,13 @@
   "dependencies": {
     "@radix-ui/react-slot": "^1.2.3",
     "@react-router/dev": "^7.0.0",
+    "@supabase/supabase-js": "^2.56.1",
     "@types/recharts": "^1.8.29",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "framer-motion": "^10.16.16",
     "lucide-react": "^0.541.0",
     "pdf-lib": "^1.17.1",
-    "puter": "^1.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-helmet-async": "^2.0.5",
@@ -32,8 +30,6 @@
     "zustand": "^4.4.7"
   },
   "devDependencies": {
-    "@testing-library/jest-dom": "^6.1.5",
-    "@testing-library/react": "^14.1.2",
     "@types/node": "^24.3.0",
     "@types/react": "^18.2.43",
     "@types/react-dom": "^18.2.17",
@@ -45,11 +41,9 @@
     "eslint": "^8.55.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.5",
-    "jsdom": "^26.1.0",
     "postcss": "^8.4.32",
     "tailwindcss": "^3.4.0",
     "typescript": "^5.2.2",
-    "vite": "^5.0.8",
-    "vitest": "^1.0.4"
+    "vite": "^5.0.8"
   }
 }
