@@ -5,7 +5,6 @@ import { ConfigurationGuard } from '@/components/auth/ConfigurationGuard'
 import { AuthPage } from '@/components/auth/AuthPage'
 import { AuthCallback } from '@/components/auth/AuthCallback'
 import HomePage from '@/pages/HomePage'
-import LandingPage from '@/pages/LandingPage'
 import { UploadPage } from '@/pages/UploadPage'
 import { QuestionnairePage } from '@/pages/QuestionnairePage'
 import { AnalyzePage } from '@/pages/AnalyzePage'
@@ -32,7 +31,7 @@ export const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <LandingPage />
+        element: <HomePage />
       }
     ]
   },
@@ -46,7 +45,7 @@ export const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <HomePage />
+        element: <Navigate to="/app/dashboard" replace />
       },
       {
         path: 'dashboard',
