@@ -46,10 +46,10 @@
 - Secure data handling
 
 ### 🔐 **Privacy & Security**
-- Serverless architecture
-- No data retention
-- Secure file processing
-- Privacy-first approach
+- Secure cloud storage with Supabase
+- Row-level security policies
+- Encrypted data transmission
+- User authentication and authorization
 
 </td>
 </tr>
@@ -110,16 +110,22 @@ cd ai-resume-analyzer
 # 2️⃣ Install dependencies
 npm install
 
-# 3️⃣ Start development server
+# 3️⃣ Set up Supabase (see SUPABASE_SETUP.md)
+cp .env.example .env
+# Add your Supabase credentials to .env
+
+# 4️⃣ Start development server
 npm run dev
 
-# 4️⃣ Open in browser
+# 5️⃣ Open in browser
 # Navigate to http://localhost:5173
 ```
 
 ### 🎉 You're Ready!
 
 The application will be running at `http://localhost:5173` with hot-reload enabled.
+
+> **📋 Important**: Make sure to complete the Supabase setup by following the detailed guide in [SUPABASE_SETUP.md](SUPABASE_SETUP.md) to enable authentication and cloud storage features.
 
 ---
 
@@ -167,7 +173,7 @@ ai-resume-analyzer/
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind-3.3-06B6D4?style=for-the-badge&logo=tailwindcss)
 
 ### Backend & Services
-![Puter.js](https://img.shields.io/badge/Puter.js-Serverless-FF6B6B?style=for-the-badge)
+![Supabase](https://img.shields.io/badge/Supabase-Database-3ECF8E?style=for-the-badge&logo=supabase)
 ![AI Services](https://img.shields.io/badge/AI-Services-4ECDC4?style=for-the-badge)
 
 ### Development Tools
@@ -184,7 +190,7 @@ ai-resume-analyzer/
 - **Tailwind CSS** - Utility-first CSS framework for rapid styling
 - **React Router v7** - Declarative routing for React applications
 - **Zustand** - Lightweight state management solution
-- **Puter.js** - Serverless backend with AI capabilities
+- **Supabase** - Backend-as-a-Service with authentication and storage
 - **Vite** - Fast build tool with HMR support
 - **Vitest** - Unit testing framework built on Vite
 
@@ -228,10 +234,11 @@ Get specific, implementable suggestions:
 
 We take your privacy seriously:
 
-- **No Data Storage** - Files are processed and immediately deleted
-- **Secure Processing** - All data is encrypted in transit
-- **Privacy First** - No tracking or analytics on personal data
-- **Serverless Architecture** - Minimal attack surface
+- **Secure Cloud Storage** - Files and data stored securely in Supabase
+- **Row-Level Security** - Users can only access their own data
+- **Encrypted Transit** - All data is encrypted in transmission
+- **Authentication Required** - Secure user authentication and authorization
+- **Privacy Controls** - Full control over your data and account
 
 ---
 

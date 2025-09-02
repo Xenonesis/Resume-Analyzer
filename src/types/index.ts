@@ -6,14 +6,22 @@ import { AIConfig } from '@/services/aiService'
 
 export interface Resume {
   id: string
+  name: string
+  fileName: string
+  filePath: string
+  resumePath: string
+  imagePath?: string
+  fileSize: number
+  uploadedAt: Date
+  updatedAt: Date
+  createdAt: Date
+  analysis: Feedback | null
+  feedback: Feedback | null
+  status: 'uploaded' | 'analyzing' | 'analyzed' | 'error'
   companyName?: string
   jobTitle?: string
   jobDescription?: string
-  imagePath: string
-  resumePath: string
-  feedback: Feedback
-  createdAt: Date
-  updatedAt: Date
+  userId: string
 }
 
 export interface Feedback {
@@ -64,8 +72,10 @@ export interface AnalysisProgress {
 
 export interface User {
   id: string
-  email?: string
-  name?: string
+  email: string
+  name: string
+  avatar?: string | null
+  createdAt: Date
 }
 
 export interface AppState {
@@ -93,4 +103,21 @@ export interface AppState {
     config: AIConfig | null
     isConfigured: boolean
   }
+}
+
+// Helper function to safely access feedback properties
+export const getFeedbackScore = (resume: Resume, category?: keyof Feedback): number => {
+  if (!resume.feedback) return 0
+  if (!category) return resume.feedback.overallScore || 0
+  
+  const section = resume.feedback[category]
+  if (typeof section === 'object' && 'score' in section) {
+    return section.score || 0
+  }
+  return 0
+}
+
+// Helper to check if resume has valid feedback
+export const hasValidFeedback = (resume: Resume): boolean => {
+  return !!(resume.feedback && resume.feedback.overallScore !== undefined)
 }

@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react'
-import { Resume } from '@/types'
+import { Resume, getFeedbackScore } from '@/types'
 import { TrendingUp, TrendingDown, Target, Award, Zap } from 'lucide-react'
 
 interface AdvancedAnalyticsProps {
@@ -63,16 +63,16 @@ export const AdvancedAnalytics: React.FC<AdvancedAnalyticsProps> = ({
         return { averageScore: 0, totalResumes: 0, topCategory: 'N/A', improvementRate: 0 }
       }
 
-      const averageScore = periodResumes.reduce((sum, r) => sum + r.feedback.overallScore, 0) / periodResumes.length
+      const averageScore = periodResumes.reduce((sum, r) => sum + getFeedbackScore(r), 0) / periodResumes.length
       const totalResumes = periodResumes.length
 
       // Find top category
       const categoryScores = {
-        ATS: periodResumes.reduce((sum, r) => sum + r.feedback.ATS.score, 0) / totalResumes,
-        content: periodResumes.reduce((sum, r) => sum + r.feedback.content.score, 0) / totalResumes,
-        structure: periodResumes.reduce((sum, r) => sum + r.feedback.structure.score, 0) / totalResumes,
-        skills: periodResumes.reduce((sum, r) => sum + r.feedback.skills.score, 0) / totalResumes,
-        toneAndStyle: periodResumes.reduce((sum, r) => sum + r.feedback.toneAndStyle.score, 0) / totalResumes
+        ATS: periodResumes.reduce((sum, r) => sum + getFeedbackScore(r, 'ATS'), 0) / totalResumes,
+        content: periodResumes.reduce((sum, r) => sum + getFeedbackScore(r, 'content'), 0) / totalResumes,
+        structure: periodResumes.reduce((sum, r) => sum + getFeedbackScore(r, 'structure'), 0) / totalResumes,
+        skills: periodResumes.reduce((sum, r) => sum + getFeedbackScore(r, 'skills'), 0) / totalResumes,
+        toneAndStyle: periodResumes.reduce((sum, r) => sum + getFeedbackScore(r, 'toneAndStyle'), 0) / totalResumes
       }
 
       const topCategory = Object.entries(categoryScores).reduce((a, b) => 
@@ -80,7 +80,7 @@ export const AdvancedAnalytics: React.FC<AdvancedAnalyticsProps> = ({
       )[0]
 
       // Calculate improvement rate (percentage of resumes above 80)
-      const highScoreCount = periodResumes.filter(r => r.feedback.overallScore >= 80).length
+      const highScoreCount = periodResumes.filter(r => getFeedbackScore(r) >= 80).length
       const improvementRate = (highScoreCount / totalResumes) * 100
 
       return { averageScore, totalResumes, topCategory, improvementRate }
@@ -115,7 +115,7 @@ export const AdvancedAnalytics: React.FC<AdvancedAnalyticsProps> = ({
       }
     }
 
-    const userAverage = filteredResumes.reduce((sum, r) => sum + r.feedback.overallScore, 0) / filteredResumes.length
+    const userAverage = filteredResumes.reduce((sum, r) => sum + getFeedbackScore(r), 0) / filteredResumes.length
     const industryBenchmark = 75 // Simulated industry average
     const topPerformerBenchmark = 90 // Simulated top 10% benchmark
 
@@ -126,7 +126,7 @@ export const AdvancedAnalytics: React.FC<AdvancedAnalyticsProps> = ({
     const categories = ['ATS', 'content', 'structure', 'skills', 'toneAndStyle']
     const categoryBenchmarks = categories.map(category => {
       const userScore = filteredResumes.reduce((sum, r) => 
-        sum + (r.feedback[category as keyof typeof r.feedback] as any).score, 0
+        sum + getFeedbackScore(r, category as keyof typeof r.feedback), 0
       ) / filteredResumes.length
 
       // Simulated category benchmarks

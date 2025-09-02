@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router'
-import { useAuthActions } from '@/stores/useAppStore'
-import puterService from '@/services/puterService'
-import { AppErrorHandler } from '@/utils/errorHandling'
+import { useAuth } from '@/stores/useAppStore'
+import { AuthModal } from '@/components/auth/AuthModal'
+
 
 interface AuthPageProps {
   onSuccess?: () => void
@@ -10,62 +10,32 @@ interface AuthPageProps {
 
 export const AuthPage: React.FC<AuthPageProps> = ({ onSuccess }) => {
   const navigate = useNavigate()
-  const [isLoading, setIsLoading] = useState(false)
-  const [error, setError] = useState<string | null>(null)
-  const { setAuthenticated, setUser, setAuthLoading } = useAuthActions()
+  const [showAuthModal, setShowAuthModal] = useState(true)
+  const { isAuthenticated } = useAuth()
 
-  const handleSignIn = async () => {
-    setIsLoading(true)
-    setAuthLoading(true)
-    setError(null)
-
-    try {
-      await puterService.auth.signIn()
-      
-      // Check if authentication was successful
-      const isAuth = await puterService.checkAuthStatus()
-      setAuthenticated(isAuth)
-      
-      if (isAuth) {
-        try {
-          const currentUser = await puterService.auth.getCurrentUser()
-          setUser(currentUser)
-          
-          if (onSuccess) {
-            onSuccess()
-          } else {
-            navigate('/')
-          }
-        } catch (userError) {
-          console.warn('Failed to get user info after sign in:', userError)
-          // Still consider auth successful even if user info fails
-          if (onSuccess) {
-            onSuccess()
-          } else {
-            navigate('/')
-          }
-        }
+  // Redirect if already authenticated
+  React.useEffect(() => {
+    if (isAuthenticated) {
+      if (onSuccess) {
+        onSuccess()
       } else {
-        throw new Error('Authentication was not successful')
+        navigate('/app')
       }
-    } catch (error) {
-      console.error('Sign in failed:', error)
-      const appError = AppErrorHandler.handleAuthError(error as Error)
-      setError(appError.userMessage || 'Sign in failed')
-      AppErrorHandler.logError(appError, 'AuthPage.handleSignIn')
-    } finally {
-      setIsLoading(false)
-      setAuthLoading(false)
     }
+  }, [isAuthenticated, navigate, onSuccess])
+
+  const handleAuthModalClose = () => {
+    setShowAuthModal(false)
+    navigate('/')
   }
 
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4">
       <div className="max-w-md w-full">
-        <div className="card text-center">
+        <div className="bg-white rounded-2xl shadow-lg border border-gray-200 p-8 text-center">
           {/* Logo/Icon */}
-          <div className="w-16 h-16 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-6">
-            <svg className="w-8 h-8 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-6">
+            <svg className="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
             </svg>
           </div>
@@ -75,7 +45,7 @@ export const AuthPage: React.FC<AuthPageProps> = ({ onSuccess }) => {
             AI Resume Analyzer
           </h1>
           <p className="text-gray-600 mb-8">
-            Get AI-powered feedback to improve your resume and increase your chances of landing your dream job.
+            Get AI-powered feedback with secure cloud storage to improve your resume and increase your chances of landing your dream job.
           </p>
 
           {/* Features */}
@@ -110,49 +80,37 @@ export const AuthPage: React.FC<AuthPageProps> = ({ onSuccess }) => {
                   <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                 </svg>
               </div>
-              <span className="text-sm text-gray-700">Secure cloud storage</span>
+              <span className="text-sm text-gray-700">Secure cloud storage with Supabase</span>
             </div>
           </div>
 
-          {/* Error Message */}
-          {error && (
-            <div className="mb-6 p-3 bg-error-50 border border-error-200 rounded-lg">
-              <p className="text-sm text-error-600">{error}</p>
-            </div>
-          )}
-
           {/* Sign In Button */}
           <button
-            onClick={handleSignIn}
-            disabled={isLoading}
-            className="btn-primary w-full mb-4"
+            onClick={() => setShowAuthModal(true)}
+            className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 px-6 rounded-lg font-semibold transition-colors duration-200 mb-4"
           >
-            {isLoading ? (
-              <div className="flex items-center justify-center space-x-2">
-                <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                <span>Signing in...</span>
-              </div>
-            ) : (
-              'Sign In with Puter'
-            )}
+            Get Started - Sign Up Free
           </button>
 
           {/* Privacy Note */}
           <p className="text-xs text-gray-500">
-            Your resume data is securely stored and never shared with third parties.
+            Your resume data is securely stored in the cloud and never shared with third parties.
           </p>
         </div>
 
         {/* Service Status */}
         <div className="mt-6 text-center">
           <div className="inline-flex items-center space-x-2 text-xs text-gray-500">
-            <div className={`w-2 h-2 rounded-full ${puterService.isAvailable() ? 'bg-green-500' : 'bg-orange-500'}`}></div>
-            <span>
-              {puterService.isAvailable() ? 'Connected to Puter Cloud' : 'Running in Demo Mode'}
-            </span>
+            <div className="w-2 h-2 rounded-full bg-green-500"></div>
+            <span>Connected to Supabase Cloud</span>
           </div>
         </div>
       </div>
+
+      <AuthModal 
+        isOpen={showAuthModal} 
+        onClose={handleAuthModalClose} 
+      />
     </div>
   )
 }

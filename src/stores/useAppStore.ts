@@ -48,7 +48,7 @@ const initialState: AppState = {
   auth: {
     isAuthenticated: false,
     user: null,
-    isLoading: false
+    isLoading: false // No loading state
   },
   files: {
     uploadProgress: 0,

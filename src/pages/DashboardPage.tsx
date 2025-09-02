@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from 'react'
 import { useResumes } from '@/stores/useAppStore'
-import { Feedback, Resume } from '@/types'
+import { Feedback, Resume, getFeedbackScore } from '@/types'
 import { TrendingUp, FileText, Target, Clock } from 'lucide-react'
 import { MetricCard } from '@/components/dashboard/MetricCard'
 import { Helmet } from 'react-helmet-async'
@@ -100,10 +100,10 @@ const DashboardPage: React.FC = () => {
     }
 
     // Score range filter
-    filtered = filtered.filter(resume => 
-      resume.feedback.overallScore >= filters.scoreRange.min && 
-      resume.feedback.overallScore <= filters.scoreRange.max
-    )
+    filtered = filtered.filter(resume => {
+      const score = getFeedbackScore(resume)
+      return score >= filters.scoreRange.min && score <= filters.scoreRange.max
+    })
 
     // Company filter
     if (filters.companies.length > 0) {
@@ -116,11 +116,11 @@ const DashboardPage: React.FC = () => {
     if (filters.categories.length > 0) {
       filtered = filtered.filter(resume => {
         const categoryScores = {
-          ATS: resume.feedback.ATS.score,
-          Content: resume.feedback.content.score,
-          Structure: resume.feedback.structure.score,
-          Skills: resume.feedback.skills.score,
-          'Tone & Style': resume.feedback.toneAndStyle.score
+          ATS: getFeedbackScore(resume, 'ATS'),
+          Content: getFeedbackScore(resume, 'content'),
+          Structure: getFeedbackScore(resume, 'structure'),
+          Skills: getFeedbackScore(resume, 'skills'),
+          'Tone & Style': getFeedbackScore(resume, 'toneAndStyle')
         }
         
         const topCategory = Object.entries(categoryScores).reduce((a, b) => 
@@ -137,8 +137,8 @@ const DashboardPage: React.FC = () => {
 
       switch (filters.sortBy) {
         case 'score':
-          aValue = a.feedback.overallScore
-          bValue = b.feedback.overallScore
+          aValue = getFeedbackScore(a)
+          bValue = getFeedbackScore(b)
           break
         case 'company':
           aValue = a.companyName || ''
@@ -147,11 +147,11 @@ const DashboardPage: React.FC = () => {
         case 'category':
           const getTopCategory = (resume: Resume) => {
             const categoryScores = {
-              ATS: resume.feedback.ATS.score,
-              Content: resume.feedback.content.score,
-              Structure: resume.feedback.structure.score,
-              Skills: resume.feedback.skills.score,
-              'Tone & Style': resume.feedback.toneAndStyle.score
+              ATS: getFeedbackScore(resume, 'ATS'),
+              Content: getFeedbackScore(resume, 'content'),
+              Structure: getFeedbackScore(resume, 'structure'),
+              Skills: getFeedbackScore(resume, 'skills'),
+              'Tone & Style': getFeedbackScore(resume, 'toneAndStyle')
             }
             return Object.entries(categoryScores).reduce((a, b) => 
               categoryScores[a[0] as keyof typeof categoryScores] > categoryScores[b[0] as keyof typeof categoryScores] ? a : b
@@ -190,7 +190,7 @@ const DashboardPage: React.FC = () => {
     }
 
     const totalResumes = filteredResumes.length
-    const averageScore = filteredResumes.reduce((sum, resume) => sum + resume.feedback.overallScore, 0) / totalResumes
+    const averageScore = filteredResumes.reduce((sum, resume) => sum + getFeedbackScore(resume), 0) / totalResumes
     
     // Recent analyses (last 7 days)
     const sevenDaysAgo = new Date()
@@ -199,11 +199,11 @@ const DashboardPage: React.FC = () => {
 
     // Find top performing category
     const categoryScores = {
-      ATS: filteredResumes.reduce((sum, r) => sum + r.feedback.ATS.score, 0) / totalResumes,
-      content: filteredResumes.reduce((sum, r) => sum + r.feedback.content.score, 0) / totalResumes,
-      structure: filteredResumes.reduce((sum, r) => sum + r.feedback.structure.score, 0) / totalResumes,
-      skills: filteredResumes.reduce((sum, r) => sum + r.feedback.skills.score, 0) / totalResumes,
-      toneAndStyle: filteredResumes.reduce((sum, r) => sum + r.feedback.toneAndStyle.score, 0) / totalResumes
+      ATS: filteredResumes.reduce((sum, r) => sum + getFeedbackScore(r, 'ATS'), 0) / totalResumes,
+      content: filteredResumes.reduce((sum, r) => sum + getFeedbackScore(r, 'content'), 0) / totalResumes,
+      structure: filteredResumes.reduce((sum, r) => sum + getFeedbackScore(r, 'structure'), 0) / totalResumes,
+      skills: filteredResumes.reduce((sum, r) => sum + getFeedbackScore(r, 'skills'), 0) / totalResumes,
+      toneAndStyle: filteredResumes.reduce((sum, r) => sum + getFeedbackScore(r, 'toneAndStyle'), 0) / totalResumes
     }
     
     const topPerformingCategory = Object.entries(categoryScores).reduce((a, b) => 
@@ -212,8 +212,8 @@ const DashboardPage: React.FC = () => {
 
     // Calculate improvement trend (comparing first half vs second half of resumes)
     const midPoint = Math.floor(totalResumes / 2)
-    const firstHalfAvg = filteredResumes.slice(0, midPoint).reduce((sum, r) => sum + r.feedback.overallScore, 0) / midPoint || 0
-    const secondHalfAvg = filteredResumes.slice(midPoint).reduce((sum, r) => sum + r.feedback.overallScore, 0) / (totalResumes - midPoint) || 0
+    const firstHalfAvg = filteredResumes.slice(0, midPoint).reduce((sum, r) => sum + getFeedbackScore(r), 0) / midPoint || 0
+    const secondHalfAvg = filteredResumes.slice(midPoint).reduce((sum, r) => sum + getFeedbackScore(r), 0) / (totalResumes - midPoint) || 0
     const improvementTrend = secondHalfAvg - firstHalfAvg
 
     return {
@@ -240,7 +240,7 @@ const DashboardPage: React.FC = () => {
     return categories.map(cat => ({
       category: cat.label,
       averageScore: filteredResumes.reduce((sum, resume) => 
-        sum + (resume.feedback[cat.key as keyof Feedback] as any).score, 0
+        sum + getFeedbackScore(resume, cat.key as keyof Feedback), 0
       ) / filteredResumes.length,
       count: filteredResumes.length,
       color: cat.color
@@ -260,9 +260,10 @@ const DashboardPage: React.FC = () => {
     ]
 
     return ranges.map(range => {
-      const count = filteredResumes.filter(resume => 
-        resume.feedback.overallScore >= range.min && resume.feedback.overallScore <= range.max
-      ).length
+      const count = filteredResumes.filter(resume => {
+        const score = getFeedbackScore(resume)
+        return score >= range.min && score <= range.max
+      }).length
       
       return {
         range: range.range,
@@ -287,7 +288,7 @@ const DashboardPage: React.FC = () => {
       if (!acc[date]) {
         acc[date] = { scores: [], count: 0 }
       }
-      acc[date].scores.push(resume.feedback.overallScore)
+      acc[date].scores.push(getFeedbackScore(resume))
       acc[date].count++
       return acc
     }, {} as Record<string, { scores: number[], count: number }>)
@@ -437,11 +438,11 @@ const DashboardPage: React.FC = () => {
                 <tbody className="bg-white divide-y divide-gray-200">
                   {filteredResumes.slice(0, 10).map((resume) => {
                     const topCategory = Object.entries({
-                      ATS: resume.feedback.ATS.score,
-                      Content: resume.feedback.content.score,
-                      Structure: resume.feedback.structure.score,
-                      Skills: resume.feedback.skills.score,
-                      'Tone & Style': resume.feedback.toneAndStyle.score
+                      ATS: getFeedbackScore(resume, 'ATS'),
+                      Content: getFeedbackScore(resume, 'content'),
+                      Structure: getFeedbackScore(resume, 'structure'),
+                      Skills: getFeedbackScore(resume, 'skills'),
+                      'Tone & Style': getFeedbackScore(resume, 'toneAndStyle')
                     }).reduce((a, b) => a[1] > b[1] ? a : b)[0]
 
                     return (
@@ -454,11 +455,11 @@ const DashboardPage: React.FC = () => {
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
                           <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
-                            resume.feedback.overallScore >= 80 ? 'bg-green-100 text-green-800' :
-                            resume.feedback.overallScore >= 60 ? 'bg-yellow-100 text-yellow-800' :
+                            getFeedbackScore(resume) >= 80 ? 'bg-green-100 text-green-800' :
+                            getFeedbackScore(resume) >= 60 ? 'bg-yellow-100 text-yellow-800' :
                             'bg-red-100 text-red-800'
                           }`}>
-                            {resume.feedback.overallScore.toFixed(1)}
+                            {getFeedbackScore(resume).toFixed(1)}
                           </span>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">

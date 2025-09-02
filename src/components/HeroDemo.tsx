@@ -6,7 +6,7 @@ export default function HeroDemo() {
 
   const handleAnalyzeClick = () => {
     // Navigate to the main analyzer page
-    navigate('/');
+    navigate('/app');
   };
 
   return (

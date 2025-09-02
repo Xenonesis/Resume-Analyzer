@@ -22,11 +22,11 @@ export default function HomePage() {
   const GoogleLogo = () => (
     <svg viewBox="0 0 150 60" className="h-12 w-auto" aria-hidden="true">
       <g>
-        <path d="M75 20c0-5.5-4.5-10-10-10s-10 4.5-10 10v20c0 5.5 4.5 10 10 10s10-4.5 10-10V20z" fill="#4285F4"/>
-        <path d="M55 30c0-5.5-4.5-10-10-10s-10 4.5-10 10v10c0 5.5 4.5 10 10 10s10-4.5 10-10V30z" fill="#EA4335"/>
-        <path d="M95 30c0-5.5 4.5-10 10-10s10 4.5 10 10v10c0 5.5-4.5 10-10 10s-10-4.5-10-10V30z" fill="#FBBC04"/>
-        <path d="M75 40c0 5.5 4.5 10 10 10s10-4.5 10-10V30c0-5.5-4.5-10-10-10s-10 4.5-10 10v10z" fill="#34A853"/>
-        <text x="115" y="35" fontFamily="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" fontSize="18" fill="#5F6368" fontWeight="500">Google</text>
+        <circle cx="20" cy="30" r="8" fill="#4285F4"/>
+        <circle cx="35" cy="30" r="8" fill="#EA4335"/>
+        <circle cx="50" cy="30" r="8" fill="#FBBC04"/>
+        <circle cx="65" cy="30" r="8" fill="#34A853"/>
+        <text x="80" y="35" fontFamily="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" fontSize="18" fill="#5F6368" fontWeight="500">Google</text>
       </g>
     </svg>
   );
@@ -65,8 +65,10 @@ export default function HomePage() {
   const MetaLogo = () => (
     <svg viewBox="0 0 150 60" className="h-12 w-auto" aria-hidden="true">
       <g>
-        <path d="M15 20c-5 0-10 5-10 10s5 10 10 10c3 0 6-1.5 8-4 2 2.5 5 4 8 4s6-1.5 8-4c2 2.5 5 4 8 4 5 0 10-5 10-10s-5-10-10-10c-3 0-6 1.5-8 4-2-2.5-5-4-8-4s-6 1.5-8 4c-2-2.5-5-4-8-4z" fill="#0081FB"/>
-        <text x="75" y="35" fontFamily="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" fontSize="18" fill="#0081FB" fontWeight="600">Meta</text>
+        <circle cx="20" cy="30" r="12" fill="#1877F2"/>
+        <circle cx="40" cy="30" r="12" fill="#42A5F5"/>
+        <circle cx="60" cy="30" r="12" fill="#0D47A1"/>
+        <text x="80" y="35" fontFamily="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" fontSize="18" fill="#1877F2" fontWeight="600">Meta</text>
       </g>
     </svg>
   );
@@ -74,18 +76,20 @@ export default function HomePage() {
   const NetflixLogo = () => (
     <svg viewBox="0 0 150 60" className="h-12 w-auto" aria-hidden="true">
       <g>
-        <path d="M8 10 L32 10 L32 50 L8 50 L8 10 Z M32 10 L40 10 L40 42 L32 42 L32 10 Z M40 10 L48 10 L48 50 L40 50 L40 10 Z M48 10 L56 10 L56 38 L48 38 L48 10 Z M56 10 L64 10 L64 50 L56 50 L56 10 Z" fill="#E50914"/>
-        <text x="75" y="38" fontFamily="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" fontSize="20" fill="#E50914" fontWeight="700">NETFLIX</text>
+        <rect x="10" y="15" width="6" height="30" fill="#E50914"/>
+        <rect x="20" y="15" width="6" height="30" fill="#E50914"/>
+        <rect x="30" y="15" width="6" height="30" fill="#E50914"/>
+        <text x="45" y="35" fontFamily="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" fontSize="18" fill="#E50914" fontWeight="700">NETFLIX</text>
       </g>
     </svg>
   );
 
   const handleAnalyzeClick = () => {
-    navigate("/upload")
+    navigate("/app/upload")
   }
   
   const handleResumeClick = (resumeId: string) => {
-    navigate(`/results/${resumeId}`)
+    navigate(`/app/results/${resumeId}`)
   }
   
   if (resumes.length === 0) {
@@ -242,6 +246,14 @@ export default function HomePage() {
                 </div>
                 <h3 className="text-xl font-bold text-slate-900 mb-4">Instant Detailed Feedback</h3>
                 <p className="text-slate-600 leading-relaxed">Get comprehensive feedback and actionable insights in under 30 seconds. No waiting, no delays. Receive specific recommendations for improvement across all critical resume elements.</p>
+              </div>
+              
+              <div className="group bg-white p-8 rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 border border-gray-100 hover:border-green-200 transform hover:scale-105">
+                <div className="w-16 h-16 bg-gradient-to-br from-green-500 to-green-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                  <Shield className="w-8 h-8 text-white" />
+                </div>
+                <h3 className="text-xl font-bold text-slate-900 mb-4">✅ Authentic AI Analysis</h3>
+                <p className="text-slate-600 leading-relaxed">We provide authentic AI analysis results with accurate scoring and detailed feedback. Configure your AI service to get real, valuable insights that will genuinely improve your resume.</p>
               </div>
               
               <div className="group bg-white p-8 rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 border border-gray-100 hover:border-pink-200 transform hover:scale-105">
@@ -484,11 +496,11 @@ export default function HomePage() {
               <Button 
                 variant="outline" 
                 size="lg"
-                onClick={() => navigate('/settings')}
+                onClick={() => navigate('/app/settings')}
                 className="group bg-transparent border-white/30 text-white hover:bg-white/10"
               >
                 <TrendingUp className="w-5 h-5 mr-3" />
-                Explore Features
+                Configure AI Settings
               </Button>
             </div>
           </div>

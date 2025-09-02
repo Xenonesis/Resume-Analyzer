@@ -115,7 +115,7 @@ export const ResultsPage: React.FC = () => {
   }
 
   if (!resumeId) {
-    navigate('/')
+    navigate('/app')
     return null
   }
 
@@ -136,7 +136,7 @@ export const ResultsPage: React.FC = () => {
           </p>
           <div className="space-y-3">
             <Button 
-              onClick={() => navigate('/')}
+              onClick={() => navigate('/app')}
               variant="modern"
               size="lg"
               className="w-full group"
@@ -145,7 +145,7 @@ export const ResultsPage: React.FC = () => {
               Back to Dashboard
             </Button>
             <Button 
-              onClick={() => navigate('/upload')}
+              onClick={() => navigate('/app/upload')}
               variant="outline"
               size="lg"
               className="w-full group"
@@ -234,7 +234,7 @@ export const ResultsPage: React.FC = () => {
         <div className="mb-8">
           <div className="flex items-center justify-between mb-6">
             <Button
-              onClick={() => navigate('/')}
+              onClick={() => navigate('/app')}
               variant="ghost"
               size="sm"
               className="group hover:bg-white/80 hover:shadow-md transition-all duration-200"
@@ -381,7 +381,7 @@ export const ResultsPage: React.FC = () => {
                 </div>
                 
                 <Button
-                  onClick={() => navigate('/upload')}
+                  onClick={() => navigate('/app/upload')}
                   variant="outline"
                   size="sm"
                   className="group"
@@ -397,7 +397,7 @@ export const ResultsPage: React.FC = () => {
         {/* Enhanced Results Component */}
         <ResumeResults
           resume={resume}
-          onBack={() => navigate('/')}
+          onBack={() => navigate('/app')}
         />
       </div>
 

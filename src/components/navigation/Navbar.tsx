@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useNavigate, useLocation } from 'react-router'
-import { useAuth, useAuthActions } from '@/stores/useAppStore'
-import puterService from '@/services/puterService'
+import { useAuth } from '@/stores/useAppStore'
+import { useSupabaseAuth } from '@/hooks/useSupabaseAuth'
 import { CompactThemeSelector } from '@/components/ThemeSelector'
 import { Menu, X, Home, Upload, Settings, Palette, LogOut, User, BarChart3 } from 'lucide-react'
 import { NotificationCenter } from '@/components/dashboard/NotificationCenter'
@@ -10,10 +10,12 @@ export const Navbar: React.FC = () => {
   const navigate = useNavigate()
   const location = useLocation()
   const { user } = useAuth()
-  const { setAuthenticated, setUser } = useAuthActions()
+
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [isSigningOut, setIsSigningOut] = useState(false)
+
+  const { signOut } = useSupabaseAuth()
 
   const handleSignOut = async () => {
     setIsSigningOut(true)
@@ -21,12 +23,9 @@ export const Navbar: React.FC = () => {
     setIsMobileMenuOpen(false)
     
     try {
-      await puterService.auth.signOut()
-      setAuthenticated(false)
-      setUser(null)
-      
-      // Navigate to auth page
-      navigate('/auth')
+      await signOut()
+      // Navigate to landing page
+      navigate('/')
     } catch (error) {
       console.error('Sign out failed:', error)
     } finally {
@@ -35,16 +34,16 @@ export const Navbar: React.FC = () => {
   }
 
   const navigationItems = [
-    { name: 'Home', path: '/', icon: Home },
-    { name: 'Dashboard', path: '/dashboard', icon: BarChart3 },
-    { name: 'Upload Resume', path: '/upload', icon: Upload },
-    { name: 'AI Settings', path: '/settings', icon: Settings },
-    { name: 'Themes', path: '/themes', icon: Palette },
+    { name: 'Home', path: '/app', icon: Home },
+    { name: 'Dashboard', path: '/app/dashboard', icon: BarChart3 },
+    { name: 'Upload Resume', path: '/app/upload', icon: Upload },
+    { name: 'AI Settings', path: '/app/settings', icon: Settings },
+    { name: 'Themes', path: '/app/themes', icon: Palette },
   ]
 
   const isActivePath = (path: string) => {
-    if (path === '/') {
-      return location.pathname === '/'
+    if (path === '/app') {
+      return location.pathname === '/app'
     }
     return location.pathname.startsWith(path)
   }
@@ -62,7 +61,7 @@ export const Navbar: React.FC = () => {
             {/* Logo */}
             <div 
               className="flex items-center space-x-3 cursor-pointer group"
-              onClick={() => navigate('/')}
+              onClick={() => navigate('/app')}
             >
               <div className="w-10 h-10 bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 rounded-xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-all duration-300 relative overflow-hidden">
                 {/* Background pattern */}
@@ -150,7 +149,7 @@ export const Navbar: React.FC = () => {
                       {user?.name || 'User'}
                     </div>
                     <div className="text-xs text-slate-500">
-                      {user?.email || 'No email'}
+                      {user?.email || ''}
                     </div>
                   </div>
                   <svg className="w-4 h-4 transition-transform duration-300 group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -171,7 +170,7 @@ export const Navbar: React.FC = () => {
                             {user?.name || 'User'}
                           </p>
                           <p className="text-sm text-slate-500">
-                            {user?.email || 'No email'}
+                            {user?.email || ''}
                           </p>
                         </div>
                       </div>

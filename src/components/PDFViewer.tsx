@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import { puterService } from '@/services/puterService'
+import { useSupabaseResumes } from '@/hooks/useSupabaseResumes'
+import { useResumes } from '@/stores/useAppStore'
 
 interface PDFViewerProps {
   filePath: string
@@ -10,6 +11,8 @@ export const PDFViewer: React.FC<PDFViewerProps> = ({ filePath, fileName }) => {
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [pdfUrl, setPdfUrl] = useState<string | null>(null)
+  const { items: resumes } = useResumes()
+  const { downloadResume } = useSupabaseResumes()
 
   useEffect(() => {
     const loadPDF = async () => {
@@ -17,22 +20,27 @@ export const PDFViewer: React.FC<PDFViewerProps> = ({ filePath, fileName }) => {
         setIsLoading(true)
         setError(null)
         
-        // Check if the filePath is a Puter path (doesn't start with http)
-        if (!filePath.startsWith('http') && !filePath.startsWith('blob:')) {
-          console.log('Loading PDF from Puter file system:', filePath)
-          
-          // Read the file from Puter's file system
-          const fileData = await puterService.fs.read(filePath)
-          
-          // Create a blob from the file data
-          const blob = new Blob([fileData], { type: 'application/pdf' })
-          const url = URL.createObjectURL(blob)
-          
-          setPdfUrl(url)
-        } else {
-          // Direct URL, use as-is
+        // Check if the filePath is a direct URL
+        if (filePath.startsWith('http') || filePath.startsWith('blob:')) {
           setPdfUrl(filePath)
+          setIsLoading(false)
+          return
         }
+
+        // Find the resume by file path
+        const resume = resumes.find(r => r.filePath === filePath)
+        if (!resume) {
+          throw new Error('Resume not found')
+        }
+
+        // Loading PDF from Supabase storage
+        
+        // Download the file from Supabase Storage
+        const fileBlob = await downloadResume(resume)
+        
+        // Create a blob URL
+        const url = URL.createObjectURL(fileBlob)
+        setPdfUrl(url)
         
         setIsLoading(false)
       } catch (err) {
@@ -52,7 +60,7 @@ export const PDFViewer: React.FC<PDFViewerProps> = ({ filePath, fileName }) => {
         URL.revokeObjectURL(pdfUrl)
       }
     }
-  }, [filePath])
+  }, [filePath, resumes, downloadResume])
 
   const handleLoad = () => {
     setIsLoading(false)

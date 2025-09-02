@@ -1,16 +1,17 @@
 import React from 'react'
 import { useNavigate } from 'react-router'
 import { FileUploader } from '@/components/FileUploader'
+import { DiagnosticInfo } from '@/components/DiagnosticInfo'
 import { Helmet } from 'react-helmet-async'
 
 export const UploadPage: React.FC = () => {
   const navigate = useNavigate()
 
   const handleUploadComplete = (filePath: string, fileName: string) => {
-    // Navigate to analyze page with the file path and name
+    // Navigate to questionnaire page with the file path and name
     const encodedPath = encodeURIComponent(filePath)
     const encodedName = encodeURIComponent(fileName)
-    navigate(`/analyze/${encodedPath}?fileName=${encodedName}`)
+    navigate(`/app/questionnaire/${encodedPath}?fileName=${encodedName}`)
   }
 
   return (
@@ -33,7 +34,7 @@ export const UploadPage: React.FC = () => {
         {/* Navigation */}
         <nav className="px-6 py-6">
           <button
-            onClick={() => navigate('/')}
+            onClick={() => navigate('/app')}
             className="group inline-flex items-center text-slate-600 hover:text-slate-900 font-medium transition-all duration-300"
             aria-label="Navigate back to dashboard homepage"
           >
@@ -60,19 +61,24 @@ export const UploadPage: React.FC = () => {
             </div>
 
             {/* Process Steps */}
-            <div className="flex items-center justify-center space-x-8 mb-12">
+            <div className="flex items-center justify-center space-x-6 mb-12">
               <div className="flex items-center space-x-3">
                 <div className="w-8 h-8 rounded-full bg-blue-600 text-white flex items-center justify-center text-sm font-medium">1</div>
                 <span className="text-sm font-medium text-slate-700">Upload</span>
               </div>
-              <div className="w-16 h-px bg-slate-200"></div>
+              <div className="w-12 h-px bg-slate-200"></div>
               <div className="flex items-center space-x-3">
                 <div className="w-8 h-8 rounded-full bg-slate-200 text-slate-500 flex items-center justify-center text-sm font-medium">2</div>
-                <span className="text-sm text-slate-500">Analyze</span>
+                <span className="text-sm text-slate-500">Questionnaire</span>
               </div>
-              <div className="w-16 h-px bg-slate-200"></div>
+              <div className="w-12 h-px bg-slate-200"></div>
               <div className="flex items-center space-x-3">
                 <div className="w-8 h-8 rounded-full bg-slate-200 text-slate-500 flex items-center justify-center text-sm font-medium">3</div>
+                <span className="text-sm text-slate-500">Analyze</span>
+              </div>
+              <div className="w-12 h-px bg-slate-200"></div>
+              <div className="flex items-center space-x-3">
+                <div className="w-8 h-8 rounded-full bg-slate-200 text-slate-500 flex items-center justify-center text-sm font-medium">4</div>
                 <span className="text-sm text-slate-500">Improve</span>
               </div>
             </div>
@@ -214,6 +220,11 @@ export const UploadPage: React.FC = () => {
                 </div>
               </div>
             </div>
+          </div>
+
+          {/* AI Configuration Status */}
+          <div className="max-w-2xl mx-auto mb-8">
+            <DiagnosticInfo onConfigureAI={() => navigate('/app/settings')} />
           </div>
 
           {/* Upload Section */}

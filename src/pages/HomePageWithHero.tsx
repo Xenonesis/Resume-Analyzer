@@ -5,6 +5,7 @@ import { LoadingSpinner } from '@/components/LoadingSpinner'
 import { useResumeData } from '@/hooks/useResumeData'
 import { useAuth } from '@/stores/useAppStore'
 import { Hero } from '@/components/ui/hero'
+import { getFeedbackScore } from '@/types'
 
 export const HomePageWithHero: React.FC = () => {
   const navigate = useNavigate()
@@ -23,7 +24,7 @@ export const HomePageWithHero: React.FC = () => {
   }
 
   const handleAnalyzeClick = () => {
-    navigate('/upload')
+    navigate('/app/upload')
   }
 
   if (resumes.length === 0) {
@@ -140,7 +141,7 @@ export const HomePageWithHero: React.FC = () => {
             Track your resume performance, monitor improvements, and optimize for success
           </p>
           <button 
-            onClick={() => navigate('/upload')}
+            onClick={() => navigate('/app/upload')}
             className="group bg-gradient-to-r from-blue-600 via-purple-600 to-blue-700 hover:from-blue-700 hover:via-purple-700 hover:to-blue-800 text-white font-bold py-4 px-8 rounded-2xl text-lg shadow-2xl hover:shadow-3xl transform hover:scale-105 transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-blue-500/50"
           >
             <span className="flex items-center justify-center">
@@ -179,7 +180,7 @@ export const HomePageWithHero: React.FC = () => {
               <div>
                 <p className="text-sm font-medium text-gray-600 mb-1">Average Score</p>
                 <p className="text-4xl font-bold bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">
-                  {Math.round(resumes.reduce((sum, r) => sum + r.feedback.overallScore, 0) / resumes.length)}
+                  {Math.round(resumes.reduce((sum, r) => sum + getFeedbackScore(r), 0) / resumes.length)}
                 </p>
                 <p className="text-xs text-gray-500 mt-1">Out of 100</p>
               </div>
@@ -196,7 +197,7 @@ export const HomePageWithHero: React.FC = () => {
               <div>
                 <p className="text-sm font-medium text-gray-600 mb-1">Best Score</p>
                 <p className="text-4xl font-bold bg-gradient-to-r from-yellow-600 to-orange-600 bg-clip-text text-transparent">
-                  {Math.max(...resumes.map(r => r.feedback.overallScore))}
+                  {Math.max(...resumes.map(r => getFeedbackScore(r)))}
                 </p>
                 <p className="text-xs text-gray-500 mt-1">Personal best</p>
               </div>
@@ -229,7 +230,7 @@ export const HomePageWithHero: React.FC = () => {
         {/* Resume Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {resumes.map((resume) => {
-            const overallGrade = getScoreGrade(resume.feedback.overallScore)
+            const overallGrade = getScoreGrade(getFeedbackScore(resume))
             return (
               <div 
                 key={resume.id} 
@@ -249,7 +250,7 @@ export const HomePageWithHero: React.FC = () => {
                     </div>
                     <div className="text-right">
                       <div className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                        {resume.feedback.overallScore}
+                        {getFeedbackScore(resume)}
                       </div>
                       <div className="text-sm text-gray-600 font-medium">Overall Score</div>
                     </div>
@@ -273,15 +274,15 @@ export const HomePageWithHero: React.FC = () => {
                   <div className="space-y-3 mb-6">
                     <div className="flex justify-between items-center p-3 bg-white/50 rounded-xl">
                       <span className="text-sm font-medium text-gray-700">ATS Compatibility</span>
-                      <span className="text-sm font-bold text-blue-600">{resume.feedback.ATS.score}/100</span>
+                      <span className="text-sm font-bold text-blue-600">{getFeedbackScore(resume, 'ATS')}/100</span>
                     </div>
                     <div className="flex justify-between items-center p-3 bg-white/50 rounded-xl">
                       <span className="text-sm font-medium text-gray-700">Content Quality</span>
-                      <span className="text-sm font-bold text-green-600">{resume.feedback.content.score}/100</span>
+                      <span className="text-sm font-bold text-green-600">{getFeedbackScore(resume, 'content')}/100</span>
                     </div>
                     <div className="flex justify-between items-center p-3 bg-white/50 rounded-xl">
                       <span className="text-sm font-medium text-gray-700">Skills Alignment</span>
-                      <span className="text-sm font-bold text-purple-600">{resume.feedback.skills.score}/100</span>
+                      <span className="text-sm font-bold text-purple-600">{getFeedbackScore(resume, 'skills')}/100</span>
                     </div>
                   </div>
 

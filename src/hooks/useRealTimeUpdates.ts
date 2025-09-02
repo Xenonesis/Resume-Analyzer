@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { useResumes } from '@/stores/useAppStore'
-import { Resume } from '@/types'
+import { Resume, getFeedbackScore } from '@/types'
 
 interface NotificationData {
   id: string
@@ -118,25 +118,25 @@ export const useRealTimeUpdates = (): RealTimeUpdateHook => {
       addNotification(createNotification(
         'new_analysis',
         'New Resume Analysis Complete',
-        `Analysis completed for ${resume.companyName || 'Unknown Company'} position with score ${resume.feedback.overallScore.toFixed(1)}`,
+        `Analysis completed for ${resume.companyName || 'Unknown Company'} position with score ${getFeedbackScore(resume).toFixed(1)}`,
         resume.id,
         'medium'
       ))
 
       // Check for high score milestone
-      if (resume.feedback.overallScore >= 90) {
+      if (getFeedbackScore(resume) >= 90) {
         addNotification(createNotification(
           'milestone',
           'Excellent Score Achieved! 🎉',
-          `Outstanding! You scored ${resume.feedback.overallScore.toFixed(1)} - that's in the top 10%!`,
+          `Outstanding! You scored ${getFeedbackScore(resume).toFixed(1)} - that's in the top 10%!`,
           resume.id,
           'high'
         ))
-      } else if (resume.feedback.overallScore >= 80) {
+      } else if (getFeedbackScore(resume) >= 80) {
         addNotification(createNotification(
           'milestone',
           'Great Score! 🌟',
-          `Well done! You scored ${resume.feedback.overallScore.toFixed(1)} - above average performance!`,
+          `Well done! You scored ${getFeedbackScore(resume).toFixed(1)} - above average performance!`,
           resume.id,
           'medium'
         ))
@@ -152,13 +152,13 @@ export const useRealTimeUpdates = (): RealTimeUpdateHook => {
     updatedResumes.forEach(resume => {
       const previous = previousResumes.find(prev => prev.id === resume.id)
       if (previous) {
-        const scoreImprovement = resume.feedback.overallScore - previous.feedback.overallScore
+        const scoreImprovement = getFeedbackScore(resume) - getFeedbackScore(previous)
         
         if (scoreImprovement > 5) {
           addNotification(createNotification(
             'score_improvement',
             'Score Improvement Detected! 📈',
-            `Your score improved by ${scoreImprovement.toFixed(1)} points to ${resume.feedback.overallScore.toFixed(1)}`,
+            `Your score improved by ${scoreImprovement.toFixed(1)} points to ${getFeedbackScore(resume).toFixed(1)}`,
             resume.id,
             'high'
           ))
@@ -177,7 +177,7 @@ export const useRealTimeUpdates = (): RealTimeUpdateHook => {
     // Check for performance patterns
     if (currentResumes.length >= 5) {
       const recentResumes = currentResumes.slice(0, 5)
-      const averageScore = recentResumes.reduce((sum, r) => sum + r.feedback.overallScore, 0) / recentResumes.length
+      const averageScore = recentResumes.reduce((sum, r) => sum + getFeedbackScore(r), 0) / recentResumes.length
       
       if (averageScore >= 85) {
         const hasConsistentHighScores = !notifications.some(n => 
@@ -246,7 +246,7 @@ export const useRealTimeUpdates = (): RealTimeUpdateHook => {
         )
 
         if (weeklyResumes.length > 0) {
-          const averageScore = weeklyResumes.reduce((sum, r) => sum + r.feedback.overallScore, 0) / weeklyResumes.length
+          const averageScore = weeklyResumes.reduce((sum, r) => sum + getFeedbackScore(r), 0) / weeklyResumes.length
           
           addNotification(createNotification(
             'milestone',

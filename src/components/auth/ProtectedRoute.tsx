@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react'
 import { useNavigate } from 'react-router'
 import { useAuth } from '@/stores/useAppStore'
-import { LoadingSpinner } from '@/components/LoadingSpinner'
 
 interface ProtectedRouteProps {
   children: React.ReactNode
@@ -11,28 +10,21 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
   children
 }) => {
   const navigate = useNavigate()
-  const { isAuthenticated, isLoading } = useAuth()
+  const { isAuthenticated } = useAuth()
 
   useEffect(() => {
-    // Temporarily skip authentication for testing
-    console.log("Authentication check - isLoading:", isLoading, "isAuthenticated:", isAuthenticated)
-    // if (!isLoading && !isAuthenticated) {
-    //   navigate('/auth')
-    // }
-  }, [isAuthenticated, isLoading, navigate])
+    // Always redirect non-authenticated users to landing page
+    if (!isAuthenticated) {
+      console.log('User not authenticated, redirecting to landing page')
+      navigate('/', { replace: true })
+    }
+  }, [isAuthenticated, navigate])
 
-  if (isLoading) {
-    return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <LoadingSpinner message="Checking authentication..." />
-      </div>
-    )
+  // If not authenticated, don't render anything (will redirect)
+  if (!isAuthenticated) {
+    return null
   }
 
-  // Temporarily skip authentication check for testing
-  // if (!isAuthenticated) {
-  //   return null // Will redirect via useEffect
-  // }
-
+  // User is authenticated, render the protected content
   return <>{children}</>
 }

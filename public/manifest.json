@@ -65,20 +65,7 @@
     }
   ],
   "categories": ["productivity", "business", "utilities"],
-  "screenshots": [
-    {
-      "src": "/screenshots/desktop-1.png",
-      "sizes": "1280x720",
-      "type": "image/png",
-      "form_factor": "wide"
-    },
-    {
-      "src": "/screenshots/mobile-1.png",
-      "sizes": "390x844",
-      "type": "image/png",
-      "form_factor": "narrow"
-    }
-  ],
+
   "shortcuts": [
     {
       "name": "Upload Resume",
@@ -87,7 +74,7 @@
       "url": "/upload",
       "icons": [
         {
-          "src": "/icons/upload-icon.png",
+          "src": "/icons/icon-96x96.png",
           "sizes": "96x96"
         }
       ]
@@ -99,7 +86,7 @@
       "url": "/dashboard",
       "icons": [
         {
-          "src": "/icons/dashboard-icon.png",
+          "src": "/icons/icon-96x96.png",
           "sizes": "96x96"
         }
       ]

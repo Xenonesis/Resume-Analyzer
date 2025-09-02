@@ -1,7 +1,8 @@
 import React, { useState, useCallback } from 'react'
 import { validateResumeFile } from '@/utils/fileValidation'
 import { useFileActions } from '@/stores/useAppStore'
-import puterService from '@/services/puterService'
+import { useSupabaseResumes } from '@/hooks/useSupabaseResumes'
+import { storeFileInSession } from '@/utils/fileStorage'
 
 interface FileUploaderProps {
   onUploadComplete?: (filePath: string, fileName: string) => void
@@ -14,6 +15,7 @@ export const FileUploader: React.FC<FileUploaderProps> = ({ onUploadComplete }) 
   const [uploadProgress, setUploadProgress] = useState(0)
   const [isUploading, setIsUploading] = useState(false)
   const { setUploading, setFileError } = useFileActions()
+  const { uploadResume } = useSupabaseResumes()
 
   const handleDrag = useCallback((e: React.DragEvent) => {
     e.preventDefault()
@@ -64,37 +66,29 @@ export const FileUploader: React.FC<FileUploaderProps> = ({ onUploadComplete }) 
     setUploadProgress(0)
 
     try {
-      // Simulate upload progress
-      const progressInterval = setInterval(() => {
-        setUploadProgress(prev => {
-          if (prev >= 90) {
-            clearInterval(progressInterval)
-            return 90
-          }
-          return prev + 10
-        })
-      }, 200)
-
-      // Upload to Puter.js
-      const result = await puterService.fs.upload([selectedFile])
+      // Upload to Supabase
+      const resume = await uploadResume(selectedFile)
       
-      clearInterval(progressInterval)
+      // Store file in session storage as fallback for analysis
+      try {
+        await storeFileInSession(resume.filePath, selectedFile)
+      } catch (sessionError) {
+        console.warn('Failed to store file in session storage:', sessionError)
+        // Continue anyway, as this is just a fallback
+      }
+      
       setUploadProgress(100)
       
-      if (result.files && result.files.length > 0) {
-        const filePath = result.files[0].path
-        
-        // Call completion callback
-        if (onUploadComplete) {
-          onUploadComplete(filePath, selectedFile.name)
-        }
-        
-        // Reset state
-        setTimeout(() => {
-          setSelectedFile(null)
-          setUploadProgress(0)
-        }, 1000)
+      // Call completion callback
+      if (onUploadComplete) {
+        onUploadComplete(resume.filePath, resume.fileName)
       }
+      
+      // Reset state
+      setTimeout(() => {
+        setSelectedFile(null)
+        setUploadProgress(0)
+      }, 1000)
     } catch (error) {
       console.error('Upload failed:', error)
       setError(error instanceof Error ? error.message : 'Upload failed')

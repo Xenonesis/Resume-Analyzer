@@ -94,28 +94,70 @@ class AIService {
       throw new Error('AI service not configured. Please set up your API key in settings.')
     }
 
+    // Validate input text
+    if (!resumeText || resumeText.trim().length < 100) {
+      throw new Error('Resume text is too short or empty. Please ensure the PDF contains readable text content.')
+    }
+
+    // Enhanced system prompt for more accurate analysis
+    const systemPrompt = `You are a professional resume analyzer with expertise in ATS systems, HR practices, and career development. 
+
+CRITICAL REQUIREMENTS:
+1. Analyze the ACTUAL resume content provided - do not use generic or template responses
+2. Provide specific, actionable feedback based on the real content
+3. Scores must reflect genuine analysis, not arbitrary numbers
+4. Tips must be relevant to the specific resume and job requirements
+5. Response must be ONLY valid JSON - no explanations, markdown, or code blocks
+
+Your analysis must be:
+- Accurate and based on actual resume content
+- Contextually relevant to the job requirements
+- Specific and actionable
+- Professional and constructive
+- Varied in scoring (avoid identical scores across categories)
+
+Respond ONLY with valid JSON starting with { and ending with }.`
+
     const messages: AIMessage[] = [
       {
         role: 'system',
-        content: 'You are an expert resume analyzer. You must respond ONLY with valid JSON data. Do not include any explanatory text, markdown formatting, code blocks, or any other content outside the JSON object. Your response must start with { and end with }.'
+        content: systemPrompt
       },
       {
         role: 'user',
-        content: `${instructions}\n\nResume content: ${resumeText}`
+        content: `${instructions}\n\nResume content to analyze:\n\n${resumeText}`
       }
     ]
 
-    switch (this.config.provider) {
-      case 'openai':
-      case 'openrouter':
-      case 'custom':
-        return this.callOpenAICompatible(messages)
-      case 'google':
-        return this.callGoogleGemini(messages)
-      case 'mistral':
-        return this.callMistralAI(messages)
-      default:
-        throw new Error(`Unsupported AI provider: ${this.config.provider}`)
+    try {
+      let response: AIResponse;
+      
+      switch (this.config.provider) {
+        case 'openai':
+        case 'openrouter':
+        case 'custom':
+          response = await this.callOpenAICompatible(messages)
+          break
+        case 'google':
+          response = await this.callGoogleGemini(messages)
+          break
+        case 'mistral':
+          response = await this.callMistralAI(messages)
+          break
+        default:
+          throw new Error(`Unsupported AI provider: ${this.config.provider}`)
+      }
+
+      // Validate response contains actual content
+      if (!response.text || response.text.trim().length < 100) {
+        throw new Error('AI response is too short or empty. Please check your API configuration.')
+      }
+
+      return response;
+      
+    } catch (error) {
+      console.error('AI analysis failed:', error)
+      throw new Error(`AI analysis failed: ${error instanceof Error ? error.message : 'Unknown error'}. Please check your API configuration and try again.`)
     }
   }
 

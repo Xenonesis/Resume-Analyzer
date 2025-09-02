@@ -11,7 +11,7 @@ if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
     navigator.serviceWorker.register('/sw.js')
       .then((registration) => {
-        console.log('SW registered: ', registration)
+        // Service Worker registered successfully
         
         // Check for updates
         registration.addEventListener('updatefound', () => {
@@ -42,8 +42,9 @@ if ('Notification' in window && 'serviceWorker' in navigator) {
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <HelmetProvider>
-      <App />
-      <RouterProvider router={router} />
+      <App>
+        <RouterProvider router={router} />
+      </App>
     </HelmetProvider>
   </React.StrictMode>,
 )

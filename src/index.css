@@ -251,6 +251,14 @@ button:focus {
   background: var(--color-secondary-400, #94a3b8);
 }
 
+/* Line clamp utility */
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
 /* Dark theme scrollbar */
 body.theme-nighty ::-webkit-scrollbar-track {
   background: #374151;
