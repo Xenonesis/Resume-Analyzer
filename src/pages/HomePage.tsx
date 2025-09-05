@@ -11,6 +11,7 @@ import HeroSection from "../components/HeroSection"
 import HowItWorksSection from "../components/HowItWorksSection"
 import CTASection from "../components/CTASection"
 import { aiService } from "../services/aiService"
+import DatabaseWithRestApi from "../components/ui/database-with-rest-api"
 
 export default function HomePage() {
   const navigate = useNavigate()
@@ -217,73 +218,123 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Enhanced Features Section */}
-        <section className="py-24 bg-gradient-to-br from-gray-50 to-white">
-          <div className="max-w-7xl mx-auto px-6">
+        {/* Powerful Resume Analysis Features Section with API Showcase */}
+        <section className="py-24 bg-gradient-to-br from-slate-900 via-blue-900 to-purple-900 relative overflow-hidden">
+          {/* Background Effects */}
+          <div className="absolute inset-0">
+            <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_30%_20%,rgba(59,130,246,0.1),transparent_50%)]"></div>
+            <div className="absolute bottom-0 right-0 w-full h-full bg-[radial-gradient(circle_at_70%_80%,rgba(168,85,247,0.1),transparent_50%)]"></div>
+            <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:50px_50px]"></div>
+          </div>
+          
+          <div className="max-w-7xl mx-auto px-6 relative z-10">
             <div className="text-center mb-20">
-              <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-6">
-                Powerful <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Resume Analysis</span> Features
+              <div className="inline-flex items-center px-6 py-3 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full text-sm font-semibold text-white mb-6">
+                <Brain className="w-4 h-4 mr-2 text-blue-400" />
+                Powered by Advanced AI Technology
+              </div>
+              <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
+                Powerful <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">Resume Analysis</span> Features
               </h2>
-              <p className="text-xl text-slate-600 max-w-3xl mx-auto">
+              <p className="text-xl text-gray-300 max-w-3xl mx-auto">
                 Our comprehensive AI-powered resume analyzer provides detailed insights across multiple dimensions to maximize your job search success.
               </p>
             </div>
+
+            {/* API Component Showcase */}
+            <div className="flex justify-center mb-20">
+              <div className="relative">
+                {/* Glow effect */}
+                <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-3xl blur-xl scale-110"></div>
+                <div className="relative bg-white/5 backdrop-blur-sm rounded-3xl p-8 border border-white/10">
+                  <DatabaseWithRestApi
+                    title="AI Resume Analysis API"
+                    circleText="AI"
+                    lightColor="#60a5fa"
+                    badgeTexts={{
+                      first: "SCAN",
+                      second: "ANALYZE", 
+                      third: "SCORE",
+                      fourth: "OPTIMIZE"
+                    }}
+                    buttonTexts={{
+                      first: "ResumeAI",
+                      second: "v2.1"
+                    }}
+                    className="scale-110"
+                  />
+                </div>
+              </div>
+            </div>
             
+            {/* Features Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              <div className="group bg-white p-8 rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 border border-gray-100 hover:border-blue-200 transform hover:scale-105">
+              <div className="group bg-white/10 backdrop-blur-sm p-8 rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 border border-white/20 hover:border-blue-400/50 transform hover:scale-105">
                 <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
                   <BarChart3 className="w-8 h-8 text-white" />
                 </div>
-                <h3 className="text-xl font-bold text-slate-900 mb-4">ATS Compatibility Scoring</h3>
-                <p className="text-slate-600 leading-relaxed">Ensure your resume passes through Applicant Tracking Systems with our comprehensive ATS compatibility analysis. We check for keyword optimization, format compatibility, and technical requirements that recruiters' systems look for.</p>
+                <h3 className="text-xl font-bold text-white mb-4">ATS Compatibility Scoring</h3>
+                <p className="text-gray-300 leading-relaxed">Ensure your resume passes through Applicant Tracking Systems with our comprehensive ATS compatibility analysis. We check for keyword optimization, format compatibility, and technical requirements that recruiters' systems look for.</p>
               </div>
               
-              <div className="group bg-white p-8 rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 border border-gray-100 hover:border-purple-200 transform hover:scale-105">
+              <div className="group bg-white/10 backdrop-blur-sm p-8 rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 border border-white/20 hover:border-purple-400/50 transform hover:scale-105">
                 <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-purple-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
                   <Brain className="w-8 h-8 text-white" />
                 </div>
-                <h3 className="text-xl font-bold text-slate-900 mb-4">AI-Powered Content Analysis</h3>
-                <p className="text-slate-600 leading-relaxed">Advanced machine learning algorithms analyze your resume content against thousands of successful applications and industry standards. We evaluate clarity, impact, relevance, and professional tone to maximize your chances.</p>
+                <h3 className="text-xl font-bold text-white mb-4">AI-Powered Content Analysis</h3>
+                <p className="text-gray-300 leading-relaxed">Advanced machine learning algorithms analyze your resume content against thousands of successful applications and industry standards. We evaluate clarity, impact, relevance, and professional tone to maximize your chances.</p>
               </div>
               
-              <div className="group bg-white p-8 rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 border-gray-100 hover:border-emerald-200 transform hover:scale-105">
+              <div className="group bg-white/10 backdrop-blur-sm p-8 rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 border border-white/20 hover:border-emerald-400/50 transform hover:scale-105">
                 <div className="w-16 h-16 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
                   <Target className="w-8 h-8 text-white" />
                 </div>
-                <h3 className="text-xl font-bold text-slate-900 mb-4">Job Target Optimization</h3>
-                <p className="text-slate-600 leading-relaxed">Align your resume with specific job descriptions and requirements. Our analyzer identifies gaps between your experience and target positions, providing tailored recommendations to improve your match rate.</p>
+                <h3 className="text-xl font-bold text-white mb-4">Job Target Optimization</h3>
+                <p className="text-gray-300 leading-relaxed">Align your resume with specific job descriptions and requirements. Our analyzer identifies gaps between your experience and target positions, providing tailored recommendations to improve your match rate.</p>
               </div>
               
-              <div className="group bg-white p-8 rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 border border-gray-100 hover:border-orange-200 transform hover:scale-105">
+              <div className="group bg-white/10 backdrop-blur-sm p-8 rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 border border-white/20 hover:border-orange-400/50 transform hover:scale-105">
                 <div className="w-16 h-16 bg-gradient-to-br from-orange-500 to-orange-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
                   <Zap className="w-8 h-8 text-white" />
                 </div>
-                <h3 className="text-xl font-bold text-slate-900 mb-4">Instant Detailed Feedback</h3>
-                <p className="text-slate-600 leading-relaxed">Get comprehensive feedback and actionable insights in under 30 seconds. No waiting, no delays. Receive specific recommendations for improvement across all critical resume elements.</p>
+                <h3 className="text-xl font-bold text-white mb-4">Instant Detailed Feedback</h3>
+                <p className="text-gray-300 leading-relaxed">Get comprehensive feedback and actionable insights in under 30 seconds. No waiting, no delays. Receive specific recommendations for improvement across all critical resume elements.</p>
               </div>
               
-              <div className="group bg-white p-8 rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 border border-gray-100 hover:border-green-200 transform hover:scale-105">
+              <div className="group bg-white/10 backdrop-blur-sm p-8 rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 border border-white/20 hover:border-green-400/50 transform hover:scale-105">
                 <div className="w-16 h-16 bg-gradient-to-br from-green-500 to-green-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
                   <Shield className="w-8 h-8 text-white" />
                 </div>
-                <h3 className="text-xl font-bold text-slate-900 mb-4">✅ Authentic AI Analysis</h3>
-                <p className="text-slate-600 leading-relaxed">We provide authentic AI analysis results with accurate scoring and detailed feedback. Configure your AI service to get real, valuable insights that will genuinely improve your resume.</p>
+                <h3 className="text-xl font-bold text-white mb-4">✅ Authentic AI Analysis</h3>
+                <p className="text-gray-300 leading-relaxed">We provide authentic AI analysis results with accurate scoring and detailed feedback. Configure your AI service to get real, valuable insights that will genuinely improve your resume.</p>
               </div>
               
-              <div className="group bg-white p-8 rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 border border-gray-100 hover:border-pink-200 transform hover:scale-105">
+              <div className="group bg-white/10 backdrop-blur-sm p-8 rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 border border-white/20 hover:border-pink-400/50 transform hover:scale-105">
                 <div className="w-16 h-16 bg-gradient-to-br from-pink-500 to-pink-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
                   <MessageSquare className="w-8 h-8 text-white" />
                 </div>
-                <h3 className="text-xl font-bold text-slate-900 mb-4">Actionable Improvement Tips</h3>
-                <p className="text-slate-600 leading-relaxed">Receive specific, prioritized recommendations to improve your resume and increase your chances of getting hired. Our tips are categorized by impact level so you know exactly where to focus your efforts.</p>
+                <h3 className="text-xl font-bold text-white mb-4">Actionable Improvement Tips</h3>
+                <p className="text-gray-300 leading-relaxed">Receive specific, prioritized recommendations to improve your resume and increase your chances of getting hired. Our tips are categorized by impact level so you know exactly where to focus your efforts.</p>
               </div>
-              
-              <div className="group bg-white p-8 rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 border border-gray-100 hover:border-indigo-200 transform hover:scale-105">
-                <div className="w-16 h-16 bg-gradient-to-br from-indigo-500 to-indigo-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
-                  <Shield className="w-8 h-8 text-white" />
-                </div>
-                <h3 className="text-xl font-bold text-slate-900 mb-4">Privacy & Security First</h3>
-                <p className="text-slate-600 leading-relaxed">Your resume data is processed securely and never stored on our servers. Complete privacy and confidentiality guaranteed with end-to-end encryption during analysis. Your information is automatically deleted after processing.</p>
+            </div>
+
+            {/* API Stats */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-20 pt-12 border-t border-white/10">
+              <div className="text-center">
+                <div className="text-4xl font-bold text-blue-400 mb-2">99.9%</div>
+                <div className="text-sm text-gray-400 uppercase tracking-wide">API Uptime</div>
+              </div>
+              <div className="text-center">
+                <div className="text-4xl font-bold text-purple-400 mb-2">&lt;30s</div>
+                <div className="text-sm text-gray-400 uppercase tracking-wide">Analysis Time</div>
+              </div>
+              <div className="text-center">
+                <div className="text-4xl font-bold text-emerald-400 mb-2">256-bit</div>
+                <div className="text-sm text-gray-400 uppercase tracking-wide">Encryption</div>
+              </div>
+              <div className="text-center">
+                <div className="text-4xl font-bold text-orange-400 mb-2">24/7</div>
+                <div className="text-sm text-gray-400 uppercase tracking-wide">Monitoring</div>
               </div>
             </div>
           </div>

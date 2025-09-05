@@ -1,4 +1,3 @@
-
 import { createBrowserRouter, Navigate } from 'react-router'
 import { ProtectedRoute } from '@/components/auth/ProtectedRoute'
 import { ConfigurationGuard } from '@/components/auth/ConfigurationGuard'
@@ -14,7 +13,8 @@ import DashboardPage from '@/pages/DashboardPage'
 import { Layout } from '@/components/layout/Layout'
 import { PublicLayout } from '@/components/layout/PublicLayout'
 import AISettings from '@/components/AISettings'
-import HeroDemo from '@/components/HeroDemo'
+import { PrivacyPolicyPage } from '@/pages/PrivacyPolicyPage'
+import { TermsOfServicePage } from '@/pages/TermsOfServicePage'
 
 export const router = createBrowserRouter([
   {
@@ -34,6 +34,14 @@ export const router = createBrowserRouter([
         element: <HomePage />
       }
     ]
+  },
+  {
+    path: '/privacy',
+    element: <PrivacyPolicyPage />
+  },
+  {
+    path: '/terms',
+    element: <TermsOfServicePage />
   },
   {
     path: '/app',
@@ -86,10 +94,6 @@ export const router = createBrowserRouter([
       {
         path: 'setup',
         element: <Navigate to="/app/settings" replace />
-      },
-      {
-        path: 'hero-demo',
-        element: <HeroDemo />
       },
       {
         path: 'themes',

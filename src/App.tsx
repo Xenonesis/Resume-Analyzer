@@ -2,14 +2,18 @@ import { useEffect } from 'react'
 import { useAIConfig, useAIConfigActions } from '@/stores/useAppStore'
 import { useSupabaseAuth } from '@/hooks/useSupabaseAuth'
 import { aiService } from '@/services/aiService'
+import { ToastProvider } from '@/components/ui/toast'
+import { NotificationProvider, useNotification } from '@/contexts/NotificationContext'
+import { NotificationToast } from '@/components/NotificationToast'
 
 interface AppProps {
   children?: React.ReactNode
 }
 
-function App({ children }: AppProps) {
+const AppContent: React.FC<AppProps> = ({ children }) => {
   const { config } = useAIConfig()
   const { setAIConfigured } = useAIConfigActions()
+  const { notifications, removeNotification } = useNotification()
 
   // Initialize Supabase authentication
   useSupabaseAuth()
@@ -24,7 +28,22 @@ function App({ children }: AppProps) {
     // Application initialized
   }, [config, setAIConfigured])
 
-  return <>{children}</>
+  return (
+    <>
+      {children}
+      <NotificationToast notifications={notifications} onRemove={removeNotification} />
+    </>
+  )
+}
+
+function App({ children }: AppProps) {
+  return (
+    <ToastProvider>
+      <NotificationProvider>
+        <AppContent>{children}</AppContent>
+      </NotificationProvider>
+    </ToastProvider>
+  )
 }
 
 export default App

@@ -1,6 +1,6 @@
 {
   "name": "ai-resume-analyzer",
-  "version": "0.75",
+  "version": "0.80",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -19,6 +19,7 @@
     "clsx": "^2.1.1",
     "framer-motion": "^10.16.16",
     "lucide-react": "^0.541.0",
+    "motion": "^12.23.12",
     "pdf-lib": "^1.17.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

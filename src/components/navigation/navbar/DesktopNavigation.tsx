@@ -2,6 +2,7 @@ import React from 'react'
 import { useLocation } from 'react-router'
 import { BarChart3, Upload, Settings, Palette } from 'lucide-react'
 import { CompactThemeSelector } from '@/components/ThemeSelector'
+import { useNotification } from '@/contexts/NotificationContext'
 
 interface NavigationItem {
   name: string
@@ -15,6 +16,7 @@ interface DesktopNavigationProps {
 
 export const DesktopNavigation: React.FC<DesktopNavigationProps> = ({ handleNavigation }) => {
   const location = useLocation()
+  const { showNotification } = useNotification()
   
   const navigationItems: NavigationItem[] = [
     { name: 'Dashboard', path: '/app/dashboard', icon: BarChart3 },
@@ -22,6 +24,13 @@ export const DesktopNavigation: React.FC<DesktopNavigationProps> = ({ handleNavi
     { name: 'AI Settings', path: '/app/settings', icon: Settings },
     { name: 'Themes', path: '/app/themes', icon: Palette },
   ]
+
+  const handleItemClick = (item: NavigationItem) => {
+    if (item.path === '/app/upload') {
+      showNotification('Navigating to Resume Upload...', 'info')
+    }
+    handleNavigation(item.path)
+  }
 
   const isActivePath = (path: string) => {
     if (path === '/app') {
@@ -35,7 +44,7 @@ export const DesktopNavigation: React.FC<DesktopNavigationProps> = ({ handleNavi
       {navigationItems.map((item) => (
         <button
           key={item.path}
-          onClick={() => handleNavigation(item.path)}
+          onClick={() => handleItemClick(item)}
           className={`group flex items-center space-x-2 px-4 py-2 rounded-xl text-sm font-semibold transition-all duration-300 ${
             isActivePath(item.path)
               ? 'bg-gradient-to-r from-blue-50 to-purple-50 text-blue-700 border border-blue-200/50 shadow-sm'

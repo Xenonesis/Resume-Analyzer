@@ -1,8 +1,10 @@
 import React from 'react'
-import { Outlet } from 'react-router'
+import { Outlet, useNavigate } from 'react-router'
 import { Navbar } from '@/components/navigation/Navbar'
 
 export const Layout: React.FC = () => {
+  const navigate = useNavigate()
+  
   return (
     <div className="min-h-screen bg-gradient-to-br from-primary-50 via-white to-secondary-50 relative">
       {/* Subtle animated background */}
@@ -29,7 +31,7 @@ export const Layout: React.FC = () => {
               <div className="flex items-center space-x-3 mb-6">
                 <div className="w-10 h-10 bg-gradient-to-r from-primary-600 to-accent-600 rounded-xl flex items-center justify-center">
                   <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 0 1 .707 .293l5.414 5.414a1 1 0 0 1 .293 .707V19a2 2 0 01-2 2z" />
                   </svg>
                 </div>
                 <h3 className="text-2xl font-bold">AI Resume Analyzer</h3>
@@ -68,8 +70,8 @@ export const Layout: React.FC = () => {
               <h4 className="text-lg font-semibold mb-4">Support</h4>
               <ul className="space-y-3 text-secondary-400">
                 <li className="hover:text-white transition-colors cursor-pointer">Help Center</li>
-                <li className="hover:text-white transition-colors cursor-pointer">Privacy Policy</li>
-                <li className="hover:text-white transition-colors cursor-pointer">Terms of Service</li>
+                <li className="hover:text-white transition-colors cursor-pointer" onClick={() => navigate('/privacy')}>Privacy Policy</li>
+                <li className="hover:text-white transition-colors cursor-pointer" onClick={() => navigate('/terms')}>Terms of Service</li>
                 <li className="hover:text-white transition-colors cursor-pointer">Contact Us</li>
               </ul>
             </div>

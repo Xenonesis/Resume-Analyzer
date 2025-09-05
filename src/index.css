@@ -291,30 +291,73 @@ body.theme-nighty ::-webkit-scrollbar-thumb:hover {
     scroll-behavior: smooth;
   }
   
+  /* Enhanced CSS Variables for Theme System */
+  :root {
+    /* Background Colors */
+    --background: var(--color-bg-primary, #f8fafc);
+    --foreground: var(--color-text-primary, #0f172a);
+    --card: var(--color-bg-secondary, #ffffff);
+    --card-foreground: var(--color-text-primary, #0f172a);
+    --popover: var(--color-bg-secondary, #ffffff);
+    --popover-foreground: var(--color-text-primary, #0f172a);
+    
+    /* Primary Colors */
+    --primary: var(--color-primary-500, #3b82f6);
+    --primary-foreground: #ffffff;
+    
+    /* Secondary Colors */
+    --secondary: var(--color-secondary-100, #f1f5f9);
+    --secondary-foreground: var(--color-secondary-900, #0f172a);
+    
+    /* Muted Colors */
+    --muted: var(--color-secondary-100, #f1f5f9);
+    --muted-foreground: var(--color-secondary-500, #64748b);
+    
+    /* Accent Colors */
+    --accent: var(--color-accent-100, #f3e8ff);
+    --accent-foreground: var(--color-accent-900, #581c87);
+    
+    /* Destructive Colors */
+    --destructive: #ef4444;
+    --destructive-foreground: #ffffff;
+    
+    /* Border Colors */
+    --border: var(--color-border-primary, #e2e8f0);
+    --input: var(--color-border-primary, #e2e8f0);
+    --ring: var(--color-primary-500, #3b82f6);
+    
+    /* Radius */
+    --radius: 0.5rem;
+  }
+  
   body {
-    @apply text-gray-900;
-    background-color: var(--color-bg-primary, #f8fafc);
-    color: var(--color-text-primary, #0f172a);
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
 
-  /* Theme-specific body styles */
+  /* Theme-specific overrides */
   body.theme-nighty {
-    @apply bg-gray-900 text-gray-100;
+    --background: var(--color-bg-primary, #0f172a);
+    --foreground: var(--color-text-primary, #f8fafc);
+    --card: var(--color-bg-secondary, #1e293b);
+    --card-foreground: var(--color-text-primary, #f8fafc);
+    --popover: var(--color-bg-secondary, #1e293b);
+    --popover-foreground: var(--color-text-primary, #f8fafc);
+    --secondary: var(--color-secondary-800, #27272a);
+    --secondary-foreground: var(--color-secondary-100, #f4f4f5);
+    --muted: var(--color-secondary-800, #27272a);
+    --muted-foreground: var(--color-secondary-400, #a1a1aa);
+    --accent: var(--color-accent-800, #075985);
+    --accent-foreground: var(--color-accent-100, #e0f2fe);
+    --border: var(--color-border-primary, #334155);
+    --input: var(--color-border-primary, #334155);
   }
 
-  /* Root variables for theming */
-  :root {
-    --color-bg-primary: #f8fafc;
-    --color-text-primary: #0f172a;
-    --color-border: #e2e8f0;
-  }
-
-  body.theme-nighty {
-    --color-bg-primary: #0f172a;
-    --color-text-primary: #f1f5f9;
-    --color-border: #374151;
+  /* Apply theme colors to common elements */
+  * {
+    border-color: hsl(var(--border));
   }
 }
 
@@ -393,6 +436,176 @@ body.theme-nighty ::-webkit-scrollbar-thumb:hover {
 
   .interactive:active {
     @apply transform scale-95;
+  }
+
+  /* Enhanced UI/UX animations */
+  .animate-float {
+    animation: float 3s ease-in-out infinite;
+  }
+
+  .animate-glow {
+    animation: glow 2s ease-in-out infinite alternate;
+  }
+
+  .animate-shimmer {
+    animation: shimmer 2s linear infinite;
+  }
+
+  .hover-glow:hover {
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.4);
+  }
+
+  /* Loading states */
+  .loading-skeleton {
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: loading 1.5s infinite;
+  }
+
+  /* Interactive elements */
+  .interactive-card {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .interactive-card:hover {
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  }
+
+  /* Progress animations */
+  .progress-fill {
+    transition: width 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Toast animations */
+  .toast-enter {
+    animation: slideInRight 0.3s ease-out;
+  }
+
+  .toast-exit {
+    animation: slideOutRight 0.3s ease-in;
+  }
+
+  /* Custom scrollbar for specific elements */
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: #f1f5f9;
+    border-radius: 3px;
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 3px;
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+  }
+}
+
+/* Database REST API Component Animations */
+.database {
+  offset-anchor: 10px 0px;
+  animation: database-animation-path;
+  animation-iteration-count: infinite;
+  animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+  animation-duration: 4s;
+  animation-delay: 1s;
+}
+
+.db-light-1 {
+  offset-path: path("M 31 10 v 15 q 0 5 5 5 h 59 q 5 0 5 5 v 25");
+}
+
+.db-light-2 {
+  offset-path: path("M 77 10 v 10 q 0 5 5 5 h 13 q 5 0 5 5 v 25");
+}
+
+.db-light-3 {
+  offset-path: path("M 124 10 v 10 q 0 5 -5 5 h -14 q -5 0 -5 5 v 25");
+}
+
+.db-light-4 {
+  offset-path: path("M 170 10 v 15 q 0 5 -5 5 h -60 q -5 0 -5 5 v 25");
+}
+
+@keyframes database-animation-path {
+  0% {
+    offset-distance: 0%;
+  }
+  100% {
+    offset-distance: 100%;
+  }
+}
+
+/* Enhanced keyframe animations */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes glow {
+  from {
+    box-shadow: 0 0 5px rgba(59, 130, 246, 0.2);
+  }
+  to {
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.6);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideOutRight {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+
+@keyframes shrink {
+  from {
+    width: 100%;
+  }
+  to {
+    width: 0%;
   }
 }
 

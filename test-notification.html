@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notification Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        
+        .navbar {
+            background: white;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+        
+        .nav-button {
+            background: #3b82f6;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-right: 1rem;
+            transition: background-color 0.2s;
+        }
+        
+        .nav-button:hover {
+            background: #2563eb;
+        }
+        
+        .notification-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+        
+        .notification {
+            background: #dbeafe;
+            border: 1px solid #93c5fd;
+            color: #1e40af;
+            padding: 1rem;
+            border-radius: 6px;
+            margin-bottom: 0.5rem;
+            min-width: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            animation: slideIn 0.3s ease-out;
+        }
+        
+        .notification.success {
+            background: #dcfce7;
+            border-color: #86efac;
+            color: #166534;
+        }
+        
+        .notification.warning {
+            background: #fef3c7;
+            border-color: #fcd34d;
+            color: #92400e;
+        }
+        
+        .notification.error {
+            background: #fee2e2;
+            border-color: #fca5a5;
+            color: #991b1b;
+        }
+        
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            color: inherit;
+            opacity: 0.7;
+        }
+        
+        .close-btn:hover {
+            opacity: 1;
+        }
+        
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <h2>AI Resume Analyzer - Navbar Test</h2>
+        <button class="nav-button" onclick="showUploadNotification()">📄 Upload Resume</button>
+        <button class="nav-button" onclick="showNotification('Dashboard loaded successfully!', 'success')">📊 Dashboard</button>
+        <button class="nav-button" onclick="showNotification('AI Settings opened', 'info')">⚙️ AI Settings</button>
+    </div>
+    
+    <div class="notification-container" id="notifications"></div>
+    
+    <div style="background: white; padding: 2rem; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+        <h3>Notification Test</h3>
+        <p>Click the "Upload Resume" button in the navbar above to see the notification in action!</p>
+        <p>This demonstrates the functionality that has been added to your AI Resume Analyzer application.</p>
+        
+        <h4>Features implemented:</h4>
+        <ul>
+            <li>✅ Notification context for global state management</li>
+            <li>✅ Toast notifications with different types (info, success, warning, error)</li>
+            <li>✅ Auto-dismiss after 3 seconds</li>
+            <li>✅ Manual close button</li>
+            <li>✅ Smooth slide-in animation</li>
+            <li>✅ Integration with navbar upload button</li>
+        </ul>
+    </div>
+
+    <script>
+        let notificationId = 0;
+        
+        function showUploadNotification() {
+            showNotification('Navigating to Resume Upload...', 'info');
+        }
+        
+        function showNotification(message, type = 'info') {
+            const container = document.getElementById('notifications');
+            const id = ++notificationId;
+            
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.innerHTML = `
+                <span>${message}</span>
+                <button class="close-btn" onclick="removeNotification(${id})">&times;</button>
+            `;
+            notification.id = `notification-${id}`;
+            
+            container.appendChild(notification);
+            
+            // Auto-remove after 3 seconds
+            setTimeout(() => {
+                removeNotification(id);
+            }, 3000);
+        }
+        
+        function removeNotification(id) {
+            const notification = document.getElementById(`notification-${id}`);
+            if (notification) {
+                notification.style.animation = 'slideIn 0.3s ease-out reverse';
+                setTimeout(() => {
+                    notification.remove();
+                }, 300);
+            }
+        }
+    </script>
+</body>
+</html>

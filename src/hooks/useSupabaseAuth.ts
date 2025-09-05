@@ -160,11 +160,30 @@ export const useSupabaseAuth = () => {
     }
   }
 
+  const resetPassword = async (email: string) => {
+    try {
+      const { error } = await supabaseService.getClient().auth.resetPasswordForEmail(email, {
+        redirectTo: `${window.location.origin}/auth/reset-password`
+      })
+      
+      if (error) {
+        console.error('Password reset error:', error)
+        throw error
+      }
+      
+      return { success: true }
+    } catch (error: any) {
+      console.error('Password reset failed:', error)
+      return { success: false, error: error.message || 'Password reset failed' }
+    }
+  }
+
   return {
     signIn,
     signUp,
     signInWithProvider,
-    signOut
+    signOut,
+    resetPassword
   }
 }
 
